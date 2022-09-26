@@ -1,8 +1,9 @@
 {
-  "name": "Vita",
+  "name": "vita",
   "version": "0.0.0",
   "private": true,
   "workspaces": [
+    "docs",
     "apps/*",
     "packages/*"
   ],
