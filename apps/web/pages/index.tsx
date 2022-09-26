@@ -1,10 +1,13 @@
-import { Button } from "ui";
+import styled from "styled-components"
+import { Button } from "ui"
 
 export default function Web() {
   return (
-    <div>
+    <Container>
       <h1>Web</h1>
       <Button />
-    </div>
-  );
+    </Container>
+  )
 }
+
+const Container = styled.div``
