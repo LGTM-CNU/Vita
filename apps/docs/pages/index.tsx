@@ -8,3 +8,5 @@ export default function Docs() {
     </div>
   )
 }
+
+// 요일 주기
