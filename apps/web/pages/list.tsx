@@ -1,24 +1,25 @@
 import styled from "styled-components";
 import medicine from "../public/medicine.png";
 import Header from "../components/Header";
-import Medicine from "../components/Medicine";
+import MedicineCard from "../components/MedicineCard";
+import { useState } from "react";
 
-const medicines = [
+const medicineArray = [
   { type: "비타민 A", date: new Date() },
   { type: "비타민 B", date: new Date() },
   { type: "비타민 C", date: new Date() },
   { type: "비타민 D", date: new Date() },
   { type: "비타민 E", date: new Date() },
-  { type: "비타민 F", date: new Date() },
 ];
 
 export default function List() {
+  const [medicines, setMedicines] = useState(medicineArray);
   return (
     <Container>
       <Header />
       <MedicineContainer>
         {medicines.map(({ type, date }, index) => (
-          <Medicine key={index} index={index} type={type} date={date} />
+          <MedicineCard key={index} index={index} type={type} date={date} />
         ))}
       </MedicineContainer>
     </Container>

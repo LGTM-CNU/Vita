@@ -28,6 +28,38 @@ const MedicineModal: React.FC<MedicineModal> = ({
           </Detail>
         </Main>
 
+        <Select>
+          <option>아침</option>
+          <option>06:00</option>
+          <option>07:00</option>
+          <option>08:00</option>
+          <option>09:00</option>
+          <option>10:00</option>
+          <option>11:00</option>
+          <option>12:00</option>
+        </Select>
+        <Select>
+          <option>점심</option>
+          <option>10:00</option>
+          <option>11:00</option>
+          <option>12:00</option>
+          <option>13:00</option>
+          <option>14:00</option>
+          <option>15:00</option>
+          <option>16:00</option>
+          <option>17:00</option>
+          <option>18:00</option>
+        </Select>
+        <Select>
+          <option>저녁</option>
+          <option>18:00</option>
+          <option>19:00</option>
+          <option>20:00</option>
+          <option>21:00</option>
+          <option>22:00</option>
+          <option>23:00</option>
+        </Select>
+
         <Date>
           <Day>월</Day>
           <Day>화</Day>
@@ -106,8 +138,14 @@ const Day = styled.div`
   color: white;
 `;
 
-const MedicineName = styled.input``;
+const Select = styled.select`
+  margin: 0 auto;
+  height: 4rem;
+  margin-bottom: 1rem;
 
-const MedicineDescription = styled.textarea``;
+  width: 70%;
+
+  font-size: 1.6rem;
+`;
 
 export default MedicineModal;
