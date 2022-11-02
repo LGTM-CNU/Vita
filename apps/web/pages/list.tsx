@@ -2,34 +2,70 @@ import styled from "styled-components"
 import Image from "next/image"
 import medicine from "../public/medicine.png"
 import medicine1 from "../public/medicine1.png"
+import Header from "../components/Header"
 
 export default function List() {
   return (
     <Container>
-      <Medicine>
-        <Image src={medicine} width={200} height={200} alt="medicine" />
-      </Medicine>
-      <Medicine>
-        <Image src={medicine1} width={200} height={200} alt="medicine" />
-      </Medicine>
+      <Header />
+      <MedicineContainer>
+        <Medicine>
+          <Image src={medicine} width={130} height={130} alt="medicine" />
+          <Title>비타민 C</Title>
+          <Detail>17시 30분</Detail>
+        </Medicine>
+        <Medicine>
+          <Image src={medicine} width={130} height={130} alt="medicine" />
+          <Title>비타민 C</Title>
+        </Medicine>
+        <Medicine>
+          <Image src={medicine} width={130} height={130} alt="medicine" />
+          <Title>비타민 C</Title>
+        </Medicine>
+        <Medicine>
+          <Image src={medicine} width={130} height={130} alt="medicine" />
+          <Title>비타민 C</Title>
+        </Medicine>
+      </MedicineContainer>
     </Container>
   )
 }
 
 const Container = styled.div`
-  /* display: grid;
-  grid-template-columns: repeat(2, 1fr); */
-
-  display: flex;
-  flex-wrap: wrap;
   width: 100%;
   height: 30%;
+
+  /* margin: 0 auto; */
+  /* background-color: #fc7522; */
+`
+
+const MedicineContainer = styled.div`
+  display: flex;
+  width: 100%;
+  flex-wrap: wrap;
+
+  margin: 0 auto;
 
   /* background-color: #fc7522; */
 `
 
 const Medicine = styled.div`
-  background-color: blue;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+
+  /* border: 1px solid black;
+  border-collapse: collapse; */
+  /* background-color: blue; */
+`
+
+const Title = styled.h1`
+  font-size: 1.6rem;
+`
+const Detail = styled.div`
+  font-size: 1.3rem;
 `
 
 // 비타민C의 효능

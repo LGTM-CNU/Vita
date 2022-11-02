@@ -20,9 +20,3 @@ const Container = styled.div`
 
   background-color: white;
 `
-
-// 10분이 지났습니다. 비타민 드셨나요? -> 긍정이면
-
-// 부정이면 -> 비타민을 먹지못한 이유를 말씀해주세요.
-
-// 응답이 기록되었습니다.
