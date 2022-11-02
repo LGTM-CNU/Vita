@@ -1,9 +1,8 @@
 import Image from "next/image";
 import styled from "styled-components";
-import Header from "./Header";
-import { theme } from "../styles/theme";
 import Modal from "./Modal";
-import medicine from "../public/medicine.png";
+import medicineImg from "../public/medicine1.png";
+import React from "react";
 
 interface MedicineModal {
   type: "edit" | "new";
@@ -19,6 +18,10 @@ const MedicineModal: React.FC<MedicineModal> = ({
   onClose,
   onConfirm,
 }) => {
+  const onChangeSelectHandler = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    console.log(typeof e.target.value, e.target.value);
+  };
+
   return (
     <Modal
       type={type}
@@ -28,14 +31,14 @@ const MedicineModal: React.FC<MedicineModal> = ({
     >
       <Container>
         <Main>
-          <Image src={medicine} width={200} height={200} alt={"medicine"} />
+          <Image src={medicineImg} width={200} height={200} alt={"medicine"} />
           <Detail>
             <input placeholder="약 이름" />
             <textarea placeholder="약에 대한 설명" />
           </Detail>
         </Main>
 
-        <Select>
+        <Select onChange={onChangeSelectHandler}>
           <option>아침</option>
           <option>06:00</option>
           <option>07:00</option>
@@ -45,7 +48,7 @@ const MedicineModal: React.FC<MedicineModal> = ({
           <option>11:00</option>
           <option>12:00</option>
         </Select>
-        <Select>
+        <Select onChange={onChangeSelectHandler}>
           <option>점심</option>
           <option>10:00</option>
           <option>11:00</option>
@@ -57,7 +60,7 @@ const MedicineModal: React.FC<MedicineModal> = ({
           <option>17:00</option>
           <option>18:00</option>
         </Select>
-        <Select>
+        <Select onChange={onChangeSelectHandler}>
           <option>저녁</option>
           <option>18:00</option>
           <option>19:00</option>

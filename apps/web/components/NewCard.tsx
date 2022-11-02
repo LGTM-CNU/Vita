@@ -3,21 +3,15 @@ import Image from "next/image";
 import { Dispatch, SetStateAction, useCallback, useState } from "react";
 
 import MedicineModal from "./MedicineModal";
-import medicine from "../public/medicine.png";
+import medicineImg from "../public/medicine1.png";
+import { Medicine } from "../type/alarm";
 
 interface MedicineProps {
-  setMedicines: Dispatch<
-    SetStateAction<
-      {
-        type: string;
-        date: Date;
-      }[]
-    >
-  >;
+  setMedicines: Dispatch<SetStateAction<Medicine[]>>;
   index: number;
 }
 
-const Medicine: React.FC<MedicineProps> = ({ setMedicines, index }) => {
+const NewCard: React.FC<MedicineProps> = ({ setMedicines, index }) => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
   const onClose = useCallback(() => {
@@ -31,7 +25,7 @@ const Medicine: React.FC<MedicineProps> = ({ setMedicines, index }) => {
   return (
     <Container>
       <Wrapper index={index} onClick={() => setIsModalOpen(true)}>
-        <Image src={medicine} width={100} height={100} alt="medicine" />
+        <Image src={medicineImg} width={100} height={100} alt="medicine" />
         <p>추가하기</p>
       </Wrapper>
       <MedicineModal
@@ -76,4 +70,4 @@ const Wrapper = styled.div<{ index: number }>`
   }
 `;
 
-export default Medicine;
+export default NewCard;

@@ -1,16 +1,41 @@
 import styled from "styled-components";
-import medicine from "../public/medicine.png";
 import Header from "../components/Header";
 import MedicineCard from "../components/MedicineCard";
 import NewCard from "../components/NewCard";
 import { useState } from "react";
+import { Medicine } from "../type/alarm";
 
-const medicineArray = [
-  { type: "비타민 A", date: new Date() },
-  { type: "비타민 B", date: new Date() },
-  { type: "비타민 C", date: new Date() },
-  { type: "비타민 D", date: new Date() },
-  { type: "비타민 E", date: new Date() },
+const medicineArray: Medicine[] = [
+  {
+    type: "비타민 A",
+    description: "엄마가 준비한 비타민C",
+    thumbnail: "medicine1.png",
+    alarm: { morning: "10:00", evening: "점심", afternoon: "저녁" },
+  },
+  {
+    type: "비타민 C",
+    description: "엄마가 준비한 비타민C",
+    thumbnail: "medicine2.png",
+    alarm: { morning: "10:00", evening: "14:00", afternoon: "저녁" },
+  },
+  {
+    type: "비타민 D",
+    description: "엄마가 준비한 비타민C",
+    thumbnail: "medicine3.png",
+    alarm: { morning: "10:00", evening: "점심", afternoon: "21:00" },
+  },
+  {
+    type: "비타민 G",
+    description: "엄마가 준비한 비타민C",
+    thumbnail: "medicine4.png",
+    alarm: { morning: "10:00", evening: "12:00", afternoon: "20:00" },
+  },
+  {
+    type: "비타민 Z",
+    description: "엄마가 준비한 비타민C",
+    thumbnail: "medicine2.png",
+    alarm: { morning: "아침", evening: "12:00", afternoon: "19:00" },
+  },
 ];
 
 export default function List() {
@@ -19,8 +44,8 @@ export default function List() {
     <Container>
       <Header />
       <MedicineContainer>
-        {medicines.map(({ type, date }, index) => (
-          <MedicineCard key={index} index={index} type={type} date={date} />
+        {medicines.map((medicine, index) => (
+          <MedicineCard key={index} index={index} medicine={medicine} />
         ))}
         <NewCard index={medicines.length} setMedicines={setMedicines} />
       </MedicineContainer>

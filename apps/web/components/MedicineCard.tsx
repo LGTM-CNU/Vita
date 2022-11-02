@@ -3,17 +3,14 @@ import Image from "next/image";
 import { useCallback, useState } from "react";
 
 import MedicineModal from "./MedicineModal";
-import medicine from "../public/medicine.png";
-import { dateToString } from "../util/time";
-import medicine1 from "../public/medicine1.png";
+import { Medicine } from "../type/alarm";
 
 interface MedicineProps {
   index: number;
-  type: string;
-  date: Date;
+  medicine: Medicine;
 }
 
-const Medicine: React.FC<MedicineProps> = ({ type, date, index }) => {
+const MedicineCard: React.FC<MedicineProps> = ({ medicine, index }) => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
   const onClose = useCallback(() => {
@@ -27,13 +24,22 @@ const Medicine: React.FC<MedicineProps> = ({ type, date, index }) => {
   return (
     <Container>
       <Wrapper index={index} onClick={() => setIsModalOpen(true)}>
-        <Image src={medicine} width={100} height={100} alt="medicine" />
-        <Title>{type}</Title>
-        <Detail>{"오전 : " + dateToString(date)}</Detail>
-        {type === "비타민 C" && (
-          <Detail>{"오후 : " + dateToString(date)}</Detail>
+        <Image
+          src={require(`../public/${medicine.thumbnail}`)}
+          width={100}
+          height={100}
+          alt="medicine"
+        />
+        <Title>{medicine.type}</Title>
+        {medicine.alarm.morning !== "아침" && (
+          <Detail>{`아침: ${medicine.alarm.morning}`}</Detail>
         )}
-        <Detail>{"저녁 : " + dateToString(date)}</Detail>
+        {medicine.alarm.evening !== "점심" && (
+          <Detail>{`점심: ${medicine.alarm.evening}`}</Detail>
+        )}
+        {medicine.alarm.afternoon !== "저녁" && (
+          <Detail>{`저녁: ${medicine.alarm.afternoon}`}</Detail>
+        )}
       </Wrapper>
       <MedicineModal
         type="edit"
@@ -74,7 +80,8 @@ const Wrapper = styled.div<{ index: number }>`
 const Title = styled.h1`
   font-size: 2rem;
 
-  margin-block: 0.2rem;
+  margin-top: 2rem;
+  margin-bottom: 0.4rem;
 `;
 
 const Detail = styled.div`
@@ -86,4 +93,4 @@ const Detail = styled.div`
   }
 `;
 
-export default Medicine;
+export default MedicineCard;
