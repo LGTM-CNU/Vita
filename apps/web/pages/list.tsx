@@ -2,6 +2,7 @@ import styled from "styled-components";
 import medicine from "../public/medicine.png";
 import Header from "../components/Header";
 import MedicineCard from "../components/MedicineCard";
+import NewCard from "../components/NewCard";
 import { useState } from "react";
 
 const medicineArray = [
@@ -21,6 +22,7 @@ export default function List() {
         {medicines.map(({ type, date }, index) => (
           <MedicineCard key={index} index={index} type={type} date={date} />
         ))}
+        <NewCard index={medicines.length} setMedicines={setMedicines} />
       </MedicineContainer>
     </Container>
   );

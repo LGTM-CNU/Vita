@@ -5,6 +5,7 @@ import { flexCenter } from "../styles/utils";
 import { createPortal } from "react-dom";
 
 interface ModalProps {
+  type: "new" | "edit";
   isOpened: boolean;
   children: React.ReactNode;
   onClose: () => void;
@@ -12,6 +13,7 @@ interface ModalProps {
 }
 
 const Modal: React.FC<ModalProps> = ({
+  type,
   isOpened,
   onClose,
   onConfirm,
@@ -34,7 +36,9 @@ const Modal: React.FC<ModalProps> = ({
         <ModalContent>{children}</ModalContent>
         <ModalActionContainer>
           <CancelButton onClick={onClose}>취소</CancelButton>
-          <ConfirmButton onClick={onConfirm}>등록</ConfirmButton>
+          <ConfirmButton onClick={onConfirm}>
+            {type === "new" ? "등록" : "수정"}
+          </ConfirmButton>
         </ModalActionContainer>
       </ModalInner>
     </Container>,

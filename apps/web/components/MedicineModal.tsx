@@ -6,6 +6,7 @@ import Modal from "./Modal";
 import medicine from "../public/medicine.png";
 
 interface MedicineModal {
+  type: "edit" | "new";
   isOpened: boolean;
   children: React.ReactNode;
   onClose: () => void;
@@ -13,12 +14,18 @@ interface MedicineModal {
 }
 
 const MedicineModal: React.FC<MedicineModal> = ({
+  type,
   isOpened,
   onClose,
   onConfirm,
 }) => {
   return (
-    <Modal isOpened={isOpened} onClose={onClose} onConfirm={onConfirm}>
+    <Modal
+      type={type}
+      isOpened={isOpened}
+      onClose={onClose}
+      onConfirm={onConfirm}
+    >
       <Container>
         <Main>
           <Image src={medicine} width={200} height={200} alt={"medicine"} />
