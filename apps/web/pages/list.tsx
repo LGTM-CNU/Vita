@@ -38,7 +38,6 @@ const MedicineContainer = styled.div`
   margin: 0 auto;
 
   padding-inline: 3rem;
-  justify-content: space-around;
 `;
 // 비타민C의 효능
 // 안먹었어 -> 먼지못한 이유가 있으신가요?

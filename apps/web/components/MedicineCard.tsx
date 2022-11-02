@@ -27,7 +27,7 @@ const Medicine: React.FC<MedicineProps> = ({ type, date, index }) => {
   return (
     <Container>
       <Wrapper index={index} onClick={() => setIsModalOpen(true)}>
-        <Image src={medicine} width={130} height={130} alt="medicine" />
+        <Image src={medicine} width={100} height={100} alt="medicine" />
         <Title>{type}</Title>
         <Detail>{"오전 : " + dateToString(date)}</Detail>
         {type === "비타민 C" && (
@@ -46,7 +46,10 @@ const Medicine: React.FC<MedicineProps> = ({ type, date, index }) => {
   );
 };
 
-const Container = styled.div``;
+const Container = styled.div`
+  width: 50%;
+  min-width: 15rem;
+`;
 
 const Wrapper = styled.div<{ index: number }>`
   display: flex;
@@ -76,6 +79,10 @@ const Title = styled.h1`
 const Detail = styled.div`
   margin-block: 0.2rem;
   font-size: 1.6rem;
+
+  @media only screen and (max-width: 435px) {
+    font-size: 1rem;
+  }
 `;
 
 export default Medicine;

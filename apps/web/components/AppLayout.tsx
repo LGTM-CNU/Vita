@@ -12,8 +12,6 @@ export default function AppLayout({ children }: PropsWithChildren) {
 const Container = styled.div`
   position: relative;
   width: 100%;
-  height: 100%;
-  flex-direction: column;
 
   margin: 0 auto;
   max-width: 48rem;
