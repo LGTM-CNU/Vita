@@ -35,6 +35,38 @@ export default function Medicine() {
         <Day>월</Day>
       </Date>
 
+      <Select>
+        <option>아침</option>
+        <option>06:00</option>
+        <option>07:00</option>
+        <option>08:00</option>
+        <option>09:00</option>
+        <option>10:00</option>
+        <option>11:00</option>
+        <option>12:00</option>
+      </Select>
+      <Select>
+        <option>점심</option>
+        <option>10:00</option>
+        <option>11:00</option>
+        <option>12:00</option>
+        <option>13:00</option>
+        <option>14:00</option>
+        <option>15:00</option>
+        <option>16:00</option>
+        <option>17:00</option>
+        <option>18:00</option>
+      </Select>
+      <Select>
+        <option>저녁</option>
+        <option>18:00</option>
+        <option>19:00</option>
+        <option>20:00</option>
+        <option>21:00</option>
+        <option>22:00</option>
+        <option>23:00</option>
+      </Select>
+
       <Button>약 등록</Button>
     </Container>
   )
@@ -116,4 +148,12 @@ const Day = styled.div`
 
   background: orange;
   color: white;
+`
+
+const Select = styled.select`
+  margin: 0 auto;
+  height: 30px;
+  margin-bottom: 5px;
+
+  width: 300px;
 `
