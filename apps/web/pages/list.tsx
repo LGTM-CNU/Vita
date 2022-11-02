@@ -3,15 +3,23 @@ import medicine from "../public/medicine.png";
 import Header from "../components/Header";
 import Medicine from "../components/Medicine";
 
+const medicines = [
+  { type: "비타민 A", date: new Date() },
+  { type: "비타민 B", date: new Date() },
+  { type: "비타민 C", date: new Date() },
+  { type: "비타민 D", date: new Date() },
+  { type: "비타민 E", date: new Date() },
+  { type: "비타민 F", date: new Date() },
+];
+
 export default function List() {
   return (
     <Container>
       <Header />
       <MedicineContainer>
-        <Medicine type="비타민 C" date={new Date()} />
-        <Medicine type="비타민 D" date={new Date()} />
-        <Medicine type="비타민 C" date={new Date()} />
-        <Medicine type="비타민 C" date={new Date()} />
+        {medicines.map(({ type, date }, index) => (
+          <Medicine key={index} index={index} type={type} date={date} />
+        ))}
       </MedicineContainer>
     </Container>
   );
@@ -19,7 +27,6 @@ export default function List() {
 
 const Container = styled.div`
   width: 100%;
-  height: 30%;
 `;
 
 const MedicineContainer = styled.div`

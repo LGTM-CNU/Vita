@@ -1,19 +1,32 @@
 import styled from "styled-components";
 import Image from "next/image";
+import { useCallback, useState } from "react";
 
-import { dateToString } from "../util/time";
+import MedicineModal from "./MedicineModal";
 import medicine from "../public/medicine.png";
+import { dateToString } from "../util/time";
 import medicine1 from "../public/medicine1.png";
 
 interface MedicineProps {
+  index: number;
   type: string;
   date: Date;
 }
 
-const Medicine: React.FC<MedicineProps> = ({ type, date }) => {
+const Medicine: React.FC<MedicineProps> = ({ type, date, index }) => {
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+
+  const onClose = useCallback(() => {
+    setIsModalOpen(false);
+  }, []);
+
+  const onConfirm = useCallback(() => {
+    return 2;
+  }, []);
+
   return (
     <Container>
-      <Wrapper>
+      <Wrapper index={index} onClick={() => setIsModalOpen(true)}>
         <Image src={medicine} width={130} height={130} alt="medicine" />
         <Title>{type}</Title>
         <Detail>{"오전 : " + dateToString(date)}</Detail>
@@ -22,13 +35,20 @@ const Medicine: React.FC<MedicineProps> = ({ type, date }) => {
         )}
         <Detail>{"저녁 : " + dateToString(date)}</Detail>
       </Wrapper>
+      <MedicineModal
+        isOpened={isModalOpen}
+        onClose={onClose}
+        onConfirm={onConfirm}
+      >
+        <div>{123}</div>
+      </MedicineModal>
     </Container>
   );
 };
 
 const Container = styled.div``;
 
-const Wrapper = styled.div`
+const Wrapper = styled.div<{ index: number }>`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -37,7 +57,8 @@ const Wrapper = styled.div`
 
   min-height: 28rem;
 
-  background-color: #f2f2f2;
+  background-color: ${({ index }) =>
+    index % 4 === 1 || index % 4 === 2 ? "#fdf4d7" : "#f8d1af"};
 
   border-radius: 3rem;
 
