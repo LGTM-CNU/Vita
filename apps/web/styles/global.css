@@ -20,5 +20,6 @@ body {
     "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR",
     "Malgun Gothic", sans-serif;
 
-  background-color: #ffe066;
+  background-image: url("../public/background.png");
+  background-repeat: repeat;
 }
