@@ -18,5 +18,6 @@ const Container = styled.div`
   margin: 0 auto;
   max-width: 48rem;
 
-  background-color: white;
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 5rem;
 `;
