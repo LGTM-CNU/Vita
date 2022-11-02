@@ -18,10 +18,6 @@ const NewCard: React.FC<MedicineProps> = ({ setMedicines, index }) => {
     setIsModalOpen(false);
   }, []);
 
-  const onConfirm = useCallback(() => {
-    return 2;
-  }, []);
-
   return (
     <Container>
       <Wrapper index={index} onClick={() => setIsModalOpen(true)}>
@@ -32,10 +28,8 @@ const NewCard: React.FC<MedicineProps> = ({ setMedicines, index }) => {
         type={"new"}
         isOpened={isModalOpen}
         onClose={onClose}
-        onConfirm={onConfirm}
-      >
-        <div>{123}</div>
-      </MedicineModal>
+        setMedicines={setMedicines}
+      />
     </Container>
   );
 };

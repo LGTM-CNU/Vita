@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import Image from "next/image";
-import { useCallback, useState } from "react";
+import { useCallback, useState, Dispatch, SetStateAction } from "react";
 
 import MedicineModal from "./MedicineModal";
 import { Medicine } from "../type/alarm";
@@ -8,17 +8,18 @@ import { Medicine } from "../type/alarm";
 interface MedicineProps {
   index: number;
   medicine: Medicine;
+  setMedicines: Dispatch<SetStateAction<Medicine[]>>;
 }
 
-const MedicineCard: React.FC<MedicineProps> = ({ medicine, index }) => {
+const MedicineCard: React.FC<MedicineProps> = ({
+  medicine,
+  index,
+  setMedicines,
+}) => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
   const onClose = useCallback(() => {
     setIsModalOpen(false);
-  }, []);
-
-  const onConfirm = useCallback(() => {
-    return 2;
   }, []);
 
   return (
@@ -43,12 +44,12 @@ const MedicineCard: React.FC<MedicineProps> = ({ medicine, index }) => {
       </Wrapper>
       <MedicineModal
         type="edit"
+        index={index}
         isOpened={isModalOpen}
+        medicine={medicine}
         onClose={onClose}
-        onConfirm={onConfirm}
-      >
-        <div>{123}</div>
-      </MedicineModal>
+        setMedicines={setMedicines}
+      />
     </Container>
   );
 };

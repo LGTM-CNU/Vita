@@ -45,7 +45,12 @@ export default function List() {
       <Header />
       <MedicineContainer>
         {medicines.map((medicine, index) => (
-          <MedicineCard key={index} index={index} medicine={medicine} />
+          <MedicineCard
+            key={index}
+            index={index}
+            medicine={medicine}
+            setMedicines={setMedicines}
+          />
         ))}
         <NewCard index={medicines.length} setMedicines={setMedicines} />
       </MedicineContainer>

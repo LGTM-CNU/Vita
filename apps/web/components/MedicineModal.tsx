@@ -2,24 +2,74 @@ import Image from "next/image";
 import styled from "styled-components";
 import Modal from "./Modal";
 import medicineImg from "../public/medicine1.png";
-import React from "react";
+import { Medicine } from "../type/alarm";
+import React, { useState, SetStateAction, Dispatch } from "react";
 
 interface MedicineModal {
+  index?: number;
   type: "edit" | "new";
   isOpened: boolean;
-  children: React.ReactNode;
+  medicine?: Medicine;
   onClose: () => void;
-  onConfirm: () => void;
+  setMedicines: Dispatch<SetStateAction<Medicine[]>>;
 }
 
 const MedicineModal: React.FC<MedicineModal> = ({
+  index,
   type,
   isOpened,
+  medicine,
   onClose,
-  onConfirm,
+  setMedicines,
 }) => {
-  const onChangeSelectHandler = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    console.log(typeof e.target.value, e.target.value);
+  const [morningAlarm, setMorningAlarm] = useState<String>(
+    medicine?.alarm.morning || "아침"
+  );
+  const [eveningAlarm, setEveningAlarm] = useState<String>(
+    medicine?.alarm.evening || "점심"
+  );
+  const [afternoonAlarm, setAfternoonAlarm] = useState<String>(
+    medicine?.alarm.afternoon || "저녁"
+  );
+  const [medicineType, setMedecineType] = useState<String>(
+    medicine?.type || ""
+  );
+  const [description, setDescription] = useState<String | undefined>(
+    medicine?.description
+  );
+
+  const onChangeMorningHandler = (e: React.ChangeEvent<HTMLSelectElement>) =>
+    setMorningAlarm(e.target.value);
+  const onChangeEveningHandler = (e: React.ChangeEvent<HTMLSelectElement>) =>
+    setEveningAlarm(e.target.value);
+  const onChangeAfternoonHandler = (e: React.ChangeEvent<HTMLSelectElement>) =>
+    setAfternoonAlarm(e.target.value);
+
+  const isSelected = (
+    time: "morning" | "evening" | "afternoon",
+    value: string
+  ) => {
+    if (!medicine) return false;
+    if (time === "morning") return value === medicine?.alarm.morning;
+    else if (time === "evening") return value === medicine?.alarm.evening;
+    else if (time === "afternoon") return value === medicine?.alarm.afternoon;
+  };
+
+  const onConfirm = () => {
+    setMedicines((oldState) => [
+      ...oldState.filter((value, i) => index !== i),
+      {
+        type: medicineType,
+        description: description,
+        thumbnail: "medicine1.png",
+        alarm: {
+          morning: morningAlarm,
+          evening: eveningAlarm,
+          afternoon: afternoonAlarm,
+        },
+      } as Medicine,
+    ]);
+    onClose();
   };
 
   return (
@@ -33,41 +83,40 @@ const MedicineModal: React.FC<MedicineModal> = ({
         <Main>
           <Image src={medicineImg} width={200} height={200} alt={"medicine"} />
           <Detail>
-            <input placeholder="약 이름" />
-            <textarea placeholder="약에 대한 설명" />
+            <input placeholder="약 이름" defaultValue={medicine?.type} />
+            <textarea
+              placeholder="약에 대한 설명"
+              defaultValue={medicine?.description}
+            />
           </Detail>
         </Main>
 
-        <Select onChange={onChangeSelectHandler}>
+        <Select onChange={onChangeMorningHandler}>
           <option>아침</option>
-          <option>06:00</option>
-          <option>07:00</option>
-          <option>08:00</option>
-          <option>09:00</option>
-          <option>10:00</option>
-          <option>11:00</option>
-          <option>12:00</option>
+          <option selected={isSelected("morning", "06:00")}>06:00</option>
+          <option selected={isSelected("morning", "07:00")}>07:00</option>
+          <option selected={isSelected("morning", "08:00")}>08:00</option>
+          <option selected={isSelected("morning", "09:00")}>09:00</option>
+          <option selected={isSelected("morning", "10:00")}>10:00</option>
+          <option selected={isSelected("morning", "11:00")}>11:00</option>
         </Select>
-        <Select onChange={onChangeSelectHandler}>
+        <Select onChange={onChangeEveningHandler}>
           <option>점심</option>
-          <option>10:00</option>
-          <option>11:00</option>
-          <option>12:00</option>
-          <option>13:00</option>
-          <option>14:00</option>
-          <option>15:00</option>
-          <option>16:00</option>
-          <option>17:00</option>
-          <option>18:00</option>
+          <option selected={isSelected("evening", "12:00")}>12:00</option>
+          <option selected={isSelected("evening", "13:00")}>13:00</option>
+          <option selected={isSelected("evening", "14:00")}>14:00</option>
+          <option selected={isSelected("evening", "15:00")}>15:00</option>
+          <option selected={isSelected("evening", "16:00")}>16:00</option>
         </Select>
-        <Select onChange={onChangeSelectHandler}>
+        <Select onChange={onChangeAfternoonHandler}>
           <option>저녁</option>
-          <option>18:00</option>
-          <option>19:00</option>
-          <option>20:00</option>
-          <option>21:00</option>
-          <option>22:00</option>
-          <option>23:00</option>
+          <option selected={isSelected("afternoon", "17:00")}>17:00</option>
+          <option selected={isSelected("afternoon", "18:00")}>18:00</option>
+          <option selected={isSelected("afternoon", "19:00")}>19:00</option>
+          <option selected={isSelected("afternoon", "20:00")}>20:00</option>
+          <option selected={isSelected("afternoon", "21:00")}>21:00</option>
+          <option selected={isSelected("afternoon", "22:00")}>22:00</option>
+          <option selected={isSelected("afternoon", "23:00")}>23:00</option>
         </Select>
 
         <Date>
