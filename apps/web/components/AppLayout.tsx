@@ -12,10 +12,13 @@ export default function AppLayout({ children }: PropsWithChildren) {
 const Container = styled.div`
   position: relative;
   width: 100%;
+  height: 100vh;
 
   margin: 0 auto;
   max-width: 48rem;
 
   background: rgba(255, 255, 255, 0.8);
   border-radius: 5rem;
+
+  overflow: scroll;
 `;
