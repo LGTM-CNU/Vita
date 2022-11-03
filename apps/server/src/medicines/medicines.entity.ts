@@ -12,9 +12,9 @@ export class MedicinesEntity {
   @PrimaryGeneratedColumn()
   id: string;
 
-  @ManyToOne(() => UsersEntity, (Users) => Users.id)
-  @JoinColumn()
-  ownerId: string;
+  @ManyToOne((type) => UsersEntity, (Users) => Users.id)
+  @JoinColumn({ name: 'ownerId' })
+  ownerId: UsersEntity;
 
   @Column()
   morning: string;

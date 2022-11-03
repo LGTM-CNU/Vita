@@ -12,18 +12,18 @@ export class MedicinesService {
     private medicinesRepository: Repository<MedicinesEntity>,
   ) {}
 
-  async showMedicines(ownerId: string) {
-    return await this.medicinesRepository.findOne({ where: { ownerId } });
+  async findByUser(ownerId: string) {
+    console.log('in: ', ownerId);
+    return await this.medicinesRepository.find({ relations: ['ownerId'] });
   }
 
-  async create(data: MedicinesDTO) {
-    console.log('test', data);
+  async create(data: MedicinesEntity) {
     const user = this.medicinesRepository.create(data);
     await this.medicinesRepository.save(data);
     return user;
   }
 
-  async update(id: string, data: Partial<MedicinesDTO>) {
+  async update(id: string, data: Partial<MedicinesEntity>) {
     return await this.medicinesRepository.update({ id }, data);
   }
 }
