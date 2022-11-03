@@ -1,5 +1,11 @@
 import { UsersEntity } from '../users/users.entity';
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
 @Entity('medicines')
 export class MedicinesEntity {
@@ -7,6 +13,7 @@ export class MedicinesEntity {
   id: string;
 
   @ManyToOne(() => UsersEntity, (Users) => Users.id)
+  @JoinColumn()
   ownerId: UsersEntity;
 
   @Column()
