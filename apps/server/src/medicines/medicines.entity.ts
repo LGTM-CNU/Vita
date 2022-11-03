@@ -30,4 +30,7 @@ export class MedicinesEntity {
 
   @Column()
   type: string;
+
+  @Column()
+  thumbnail: string;
 }
