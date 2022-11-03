@@ -4,33 +4,39 @@ import MedicineCard from "../components/MedicineCard";
 import NewCard from "../components/NewCard";
 import { useState } from "react";
 import { Medicine } from "../type/alarm";
+import uuid from "react-uuid";
 
 const medicineArray: Medicine[] = [
   {
+    id: uuid(),
     type: "비타민 A",
     description: "엄마가 준비한 비타민C",
     thumbnail: "medicine1.png",
     alarm: { morning: "10:00", evening: "점심", afternoon: "저녁" },
   },
   {
+    id: uuid(),
     type: "비타민 C",
     description: "엄마가 준비한 비타민C",
     thumbnail: "medicine2.png",
     alarm: { morning: "10:00", evening: "14:00", afternoon: "저녁" },
   },
   {
+    id: uuid(),
     type: "비타민 D",
     description: "엄마가 준비한 비타민C",
     thumbnail: "medicine3.png",
     alarm: { morning: "10:00", evening: "점심", afternoon: "21:00" },
   },
   {
+    id: uuid(),
     type: "비타민 G",
     description: "엄마가 준비한 비타민C",
     thumbnail: "medicine4.png",
     alarm: { morning: "10:00", evening: "12:00", afternoon: "20:00" },
   },
   {
+    id: uuid(),
     type: "비타민 Z",
     description: "엄마가 준비한 비타민C",
     thumbnail: "medicine2.png",
@@ -45,12 +51,7 @@ export default function List() {
       <Header />
       <MedicineContainer>
         {medicines.map((medicine, index) => (
-          <MedicineCard
-            key={index}
-            index={index}
-            medicine={medicine}
-            setMedicines={setMedicines}
-          />
+          <MedicineCard key={index} index={index} medicine={medicine} setMedicines={setMedicines} />
         ))}
         <NewCard index={medicines.length} setMedicines={setMedicines} />
       </MedicineContainer>

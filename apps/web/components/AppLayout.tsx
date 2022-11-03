@@ -18,7 +18,6 @@ const Container = styled.div`
   max-width: 48rem;
 
   background: rgba(255, 255, 255, 0.8);
-  border-radius: 5rem;
 
   overflow: scroll;
 `;

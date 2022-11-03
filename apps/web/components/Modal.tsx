@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
 import { fadeIn, fadeOut } from "../styles/animation";
 import { flexCenter } from "../styles/utils";
@@ -12,13 +12,7 @@ interface ModalProps {
   onConfirm: () => void;
 }
 
-const Modal: React.FC<ModalProps> = ({
-  type,
-  isOpened,
-  onClose,
-  onConfirm,
-  children,
-}) => {
+const Modal: React.FC<ModalProps> = ({ type, isOpened, onClose, onConfirm, children }) => {
   const [element, setElement] = useState<HTMLElement | null>(null);
 
   useEffect(() => {
@@ -36,9 +30,7 @@ const Modal: React.FC<ModalProps> = ({
         <ModalContent>{children}</ModalContent>
         <ModalActionContainer>
           <CancelButton onClick={onClose}>취소</CancelButton>
-          <ConfirmButton onClick={onConfirm}>
-            {type === "new" ? "등록" : "수정"}
-          </ConfirmButton>
+          <ConfirmButton onClick={onConfirm}>{type === "new" ? "등록" : "수정"}</ConfirmButton>
         </ModalActionContainer>
       </ModalInner>
     </Container>,

@@ -3,10 +3,10 @@ import styled from "styled-components";
 import Modal from "./Modal";
 import medicineImg from "../public/medicine1.png";
 import { Medicine } from "../type/alarm";
-import React, { useState, SetStateAction, Dispatch } from "react";
+import React, { useState, SetStateAction, Dispatch, useId } from "react";
 
 interface MedicineModal {
-  index?: number;
+  id: String;
   type: "edit" | "new";
   isOpened: boolean;
   medicine?: Medicine;
@@ -14,41 +14,18 @@ interface MedicineModal {
   setMedicines: Dispatch<SetStateAction<Medicine[]>>;
 }
 
-const MedicineModal: React.FC<MedicineModal> = ({
-  index,
-  type,
-  isOpened,
-  medicine,
-  onClose,
-  setMedicines,
-}) => {
-  const [morningAlarm, setMorningAlarm] = useState<String>(
-    medicine?.alarm.morning || "아침"
-  );
-  const [eveningAlarm, setEveningAlarm] = useState<String>(
-    medicine?.alarm.evening || "점심"
-  );
-  const [afternoonAlarm, setAfternoonAlarm] = useState<String>(
-    medicine?.alarm.afternoon || "저녁"
-  );
-  const [medicineType, setMedecineType] = useState<String>(
-    medicine?.type || ""
-  );
-  const [description, setDescription] = useState<String | undefined>(
-    medicine?.description
-  );
+const MedicineModal: React.FC<MedicineModal> = ({ type, isOpened, medicine, onClose, setMedicines, id }) => {
+  const [morningAlarm, setMorningAlarm] = useState<String>(medicine?.alarm.morning || "아침");
+  const [eveningAlarm, setEveningAlarm] = useState<String>(medicine?.alarm.evening || "점심");
+  const [afternoonAlarm, setAfternoonAlarm] = useState<String>(medicine?.alarm.afternoon || "저녁");
+  const [medicineType, setMedecineType] = useState<String>(medicine?.type || "");
+  const [description, setDescription] = useState<String | undefined>(medicine?.description);
 
-  const onChangeMorningHandler = (e: React.ChangeEvent<HTMLSelectElement>) =>
-    setMorningAlarm(e.target.value);
-  const onChangeEveningHandler = (e: React.ChangeEvent<HTMLSelectElement>) =>
-    setEveningAlarm(e.target.value);
-  const onChangeAfternoonHandler = (e: React.ChangeEvent<HTMLSelectElement>) =>
-    setAfternoonAlarm(e.target.value);
+  const onChangeMorningHandler = (e: React.ChangeEvent<HTMLSelectElement>) => setMorningAlarm(e.target.value);
+  const onChangeEveningHandler = (e: React.ChangeEvent<HTMLSelectElement>) => setEveningAlarm(e.target.value);
+  const onChangeAfternoonHandler = (e: React.ChangeEvent<HTMLSelectElement>) => setAfternoonAlarm(e.target.value);
 
-  const isSelected = (
-    time: "morning" | "evening" | "afternoon",
-    value: string
-  ) => {
+  const isSelected = (time: "morning" | "evening" | "afternoon", value: string) => {
     if (!medicine) return false;
     if (time === "morning") return value === medicine?.alarm.morning;
     else if (time === "evening") return value === medicine?.alarm.evening;
@@ -56,36 +33,56 @@ const MedicineModal: React.FC<MedicineModal> = ({
   };
 
   const onConfirm = () => {
-    setMedicines((oldState) => [
-      ...oldState.filter((value, i) => index !== i),
-      {
-        type: medicineType,
-        description: description,
-        thumbnail: "medicine1.png",
-        alarm: {
-          morning: morningAlarm,
-          evening: eveningAlarm,
-          afternoon: afternoonAlarm,
-        },
-      } as Medicine,
-    ]);
+    if (type === "edit") {
+      setMedicines((oldState) => [
+        ...oldState.map((value) => {
+          if (value.id !== id) return value;
+          return {
+            id: id,
+            type: medicineType,
+            description: description,
+            thumbnail: "medicine1.png",
+            alarm: {
+              morning: morningAlarm,
+              evening: eveningAlarm,
+              afternoon: afternoonAlarm,
+            },
+          } as Medicine;
+        }),
+      ]);
+    } else if (type === "new") {
+      setMedicines((oldState) => [
+        ...oldState,
+        {
+          id: id,
+          type: medicineType,
+          description: description,
+          thumbnail: "medicine1.png",
+          alarm: {
+            morning: morningAlarm,
+            evening: eveningAlarm,
+            afternoon: afternoonAlarm,
+          },
+        } as Medicine,
+      ]);
+    }
     onClose();
   };
 
+  const onTypeInputHandler = (e: React.ChangeEvent<HTMLInputElement>) => setMedecineType(e.target.value);
+
+  const onDescriptionChangeHandler = (e: React.ChangeEvent<HTMLTextAreaElement>) => setDescription(e.target.value);
+
   return (
-    <Modal
-      type={type}
-      isOpened={isOpened}
-      onClose={onClose}
-      onConfirm={onConfirm}
-    >
+    <Modal type={type} isOpened={isOpened} onClose={onClose} onConfirm={onConfirm}>
       <Container>
         <Main>
           <Image src={medicineImg} width={200} height={200} alt={"medicine"} />
           <Detail>
-            <input placeholder="약 이름" defaultValue={medicine?.type} />
+            <input placeholder="약 이름" defaultValue={medicine?.type} onInput={onTypeInputHandler} />
             <textarea
               placeholder="약에 대한 설명"
+              onChange={onDescriptionChangeHandler}
               defaultValue={medicine?.description}
             />
           </Detail>
@@ -207,4 +204,4 @@ const Select = styled.select`
   font-size: 1.6rem;
 `;
 
-export default MedicineModal;
+export default React.memo(MedicineModal);

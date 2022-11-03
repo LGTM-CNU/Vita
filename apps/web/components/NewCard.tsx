@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import Image from "next/image";
-import { Dispatch, SetStateAction, useCallback, useState } from "react";
+import { Dispatch, SetStateAction, useCallback, useState, useId, useEffect } from "react";
+import uuid from "react-uuid";
 
 import MedicineModal from "./MedicineModal";
 import medicineImg from "../public/medicine1.png";
@@ -13,6 +14,11 @@ interface MedicineProps {
 
 const NewCard: React.FC<MedicineProps> = ({ setMedicines, index }) => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [id, setId] = useState<String>(uuid());
+
+  useEffect(() => {
+    setId(uuid());
+  }, [index]);
 
   const onClose = useCallback(() => {
     setIsModalOpen(false);
@@ -24,12 +30,7 @@ const NewCard: React.FC<MedicineProps> = ({ setMedicines, index }) => {
         <Image src={medicineImg} width={100} height={100} alt="medicine" />
         <p>추가하기</p>
       </Wrapper>
-      <MedicineModal
-        type={"new"}
-        isOpened={isModalOpen}
-        onClose={onClose}
-        setMedicines={setMedicines}
-      />
+      <MedicineModal id={id} type={"new"} isOpened={isModalOpen} onClose={onClose} setMedicines={setMedicines} />
     </Container>
   );
 };
@@ -48,8 +49,7 @@ const Wrapper = styled.div<{ index: number }>`
 
   min-height: 28rem;
 
-  background-color: ${({ index }) =>
-    index % 4 === 1 || index % 4 === 2 ? "#fdf4d7" : "#f8d1af"};
+  background-color: ${({ index }) => (index % 4 === 1 || index % 4 === 2 ? "#fdf4d7" : "#f8d1af")};
 
   border: 1px dashed black;
   border-radius: 3rem;
