@@ -2,50 +2,24 @@ import styled from "styled-components";
 import Header from "../components/Header";
 import MedicineCard from "../components/MedicineCard";
 import NewCard from "../components/NewCard";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Medicine } from "../type/alarm";
-import uuid from "react-uuid";
-
-const medicineArray: Medicine[] = [
-  {
-    id: uuid(),
-    type: "비타민 A",
-    description: "엄마가 준비한 비타민C",
-    thumbnail: "medicine1.png",
-    alarm: { morning: "10:00", evening: "점심", afternoon: "저녁" },
-  },
-  {
-    id: uuid(),
-    type: "비타민 C",
-    description: "엄마가 준비한 비타민C",
-    thumbnail: "medicine2.png",
-    alarm: { morning: "10:00", evening: "14:00", afternoon: "저녁" },
-  },
-  {
-    id: uuid(),
-    type: "비타민 D",
-    description: "엄마가 준비한 비타민C",
-    thumbnail: "medicine3.png",
-    alarm: { morning: "10:00", evening: "점심", afternoon: "21:00" },
-  },
-  {
-    id: uuid(),
-    type: "비타민 G",
-    description: "엄마가 준비한 비타민C",
-    thumbnail: "medicine4.png",
-    alarm: { morning: "10:00", evening: "12:00", afternoon: "20:00" },
-  },
-  {
-    id: uuid(),
-    type: "비타민 Z",
-    description: "엄마가 준비한 비타민C",
-    thumbnail: "medicine2.png",
-    alarm: { morning: "아침", evening: "12:00", afternoon: "19:00" },
-  },
-];
 
 export default function List() {
-  const [medicines, setMedicines] = useState(medicineArray);
+  const [medicines, setMedicines] = useState<Medicine[]>([]);
+  useEffect(() => {
+    fetch("http://localhost:5002/medicines/123").then(async (value) => {
+      const { data } = await value.json();
+      const newMedicineArray = data.map((v: any) => ({
+        id: v.medicines_id,
+        type: v.medicines_type,
+        description: v.medicines_description,
+        thumbnail: v.medicines_thumbnail,
+        alarm: { morning: v.medicines_morning, evening: v.medicines_evening, afternoon: v.medicines_afternoon },
+      }));
+      setMedicines([...medicines, ...newMedicineArray]);
+    });
+  }, []);
   return (
     <Container>
       <Header />
