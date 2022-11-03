@@ -3,7 +3,6 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
 import { MedicinesEntity } from './medicines.entity';
-import { MedicinesDTO } from './medicine.dto';
 
 @Injectable()
 export class MedicinesService {
@@ -13,8 +12,11 @@ export class MedicinesService {
   ) {}
 
   async findByUser(ownerId: string) {
-    console.log('in: ', ownerId);
-    return await this.medicinesRepository.find({ relations: ['ownerId'] });
+    return await this.medicinesRepository
+      .createQueryBuilder('medicines')
+      .where('ownerId=:ownerId', { ownerId })
+      .select()
+      .execute();
   }
 
   async create(data: MedicinesEntity) {
