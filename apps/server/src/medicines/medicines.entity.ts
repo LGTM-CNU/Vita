@@ -14,10 +14,10 @@ export class MedicinesEntity {
 
   @ManyToOne(() => UsersEntity, (Users) => Users.id)
   @JoinColumn()
-  ownerId: UsersEntity;
+  ownerId: string;
 
   @Column()
-  moring: string;
+  morning: string;
 
   @Column()
   evening: string;

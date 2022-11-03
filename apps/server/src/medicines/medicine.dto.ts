@@ -1,5 +1,3 @@
-import { UsersDTO } from 'src/users/users.dto';
-
 export interface MedicinesDTO {
   id: string;
   type: string;
@@ -7,5 +5,5 @@ export interface MedicinesDTO {
   evening: string;
   afternoon: string;
   description: string;
-  ownerId: UsersDTO;
+  ownerId: string;
 }
