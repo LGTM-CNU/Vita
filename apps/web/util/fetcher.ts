@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const apiClient = axios.create({
-  baseURL: "http://localhost:5002",
+  baseURL: "http://localhost",
 });
 
 const fetcher = async (method: "get" | "post" | "patch" | "delete", url: string, ...rest: object[]) => {
