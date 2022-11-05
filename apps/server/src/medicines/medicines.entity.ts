@@ -1,15 +1,9 @@
 import { UsersEntity } from '../users/users.entity';
-import {
-  Column,
-  Entity,
-  JoinColumn,
-  ManyToOne,
-  PrimaryGeneratedColumn,
-} from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryColumn } from 'typeorm';
 
 @Entity('medicines')
 export class MedicinesEntity {
-  @PrimaryGeneratedColumn()
+  @PrimaryColumn({ type: String })
   id: string;
 
   @ManyToOne((type) => UsersEntity, (Users) => Users.id)
@@ -28,7 +22,7 @@ export class MedicinesEntity {
   @Column()
   description: string;
 
-  @Column()
+  @Column({ length: 40 })
   type: string;
 
   @Column()

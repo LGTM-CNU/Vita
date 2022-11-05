@@ -5,9 +5,11 @@ import NewCard from "../components/NewCard";
 import { useEffect, useState } from "react";
 import { Medicine } from "../type/alarm";
 import fetcher from "../util/fetcher";
+import { useRecoilValue } from "recoil";
+import { userIdState } from "../store/userId";
 
 export default function List() {
-  const userId = 123;
+  const userId = useRecoilValue(userIdState);
   const [medicines, setMedicines] = useState<Medicine[]>([]);
   useEffect(() => {
     const getData = async () => {
@@ -17,7 +19,9 @@ export default function List() {
         type: v.medicines_type,
         description: v.medicines_description,
         thumbnail: v.medicines_thumbnail,
-        alarm: { morning: v.medicines_morning, evening: v.medicines_evening, afternoon: v.medicines_afternoon },
+        morning: v.medicines_morning,
+        evening: v.medicines_evening,
+        afternoon: v.medicines_afternoon,
       }));
       setMedicines([...fetchMedicinesData]);
     };

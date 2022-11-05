@@ -4,6 +4,9 @@ import Modal from "./Modal";
 import medicineImg from "../public/medicine1.png";
 import { Medicine } from "../type/alarm";
 import React, { useState, SetStateAction, Dispatch, useId } from "react";
+import fetcher from "../util/fetcher";
+import { useRecoilValue } from "recoil";
+import { userIdState } from "../store/userId";
 
 interface MedicineModal {
   id: String;
@@ -15,11 +18,12 @@ interface MedicineModal {
 }
 
 const MedicineModal: React.FC<MedicineModal> = ({ type, isOpened, medicine, onClose, setMedicines, id }) => {
-  const [morningAlarm, setMorningAlarm] = useState<String | undefined>(medicine?.alarm.morning);
-  const [eveningAlarm, setEveningAlarm] = useState<String | undefined>(medicine?.alarm.evening);
-  const [afternoonAlarm, setAfternoonAlarm] = useState<String | undefined>(medicine?.alarm.afternoon);
+  const [morningAlarm, setMorningAlarm] = useState<String | undefined>(medicine?.morning);
+  const [eveningAlarm, setEveningAlarm] = useState<String | undefined>(medicine?.evening);
+  const [afternoonAlarm, setAfternoonAlarm] = useState<String | undefined>(medicine?.afternoon);
   const [medicineType, setMedecineType] = useState<string>(medicine?.type || "");
   const [description, setDescription] = useState<string | undefined>(medicine?.description);
+  const userId = useRecoilValue(userIdState);
 
   const onChangeMorningHandler = (e: React.ChangeEvent<HTMLSelectElement>) => setMorningAlarm(e.target.value);
   const onChangeEveningHandler = (e: React.ChangeEvent<HTMLSelectElement>) => setEveningAlarm(e.target.value);
@@ -32,28 +36,24 @@ const MedicineModal: React.FC<MedicineModal> = ({ type, isOpened, medicine, onCl
     else if (time === "afternoon") return value === afternoonAlarm;
   };
 
-  const onConfirm = () => {
+  const onConfirm = async () => {
     const newMedicine = {
       id: id,
       type: medicineType,
       description: description,
       thumbnail: "medicine1.png",
-      alarm: {
-        morning: morningAlarm,
-        evening: eveningAlarm,
-        afternoon: afternoonAlarm,
-      },
+      morning: morningAlarm === "아침" ? null : morningAlarm,
+      evening: eveningAlarm === "점심" ? null : eveningAlarm,
+      afternoon: afternoonAlarm === "저녁" ? null : afternoonAlarm,
+      ownerId: userId,
     } as Medicine;
 
     if (type === "edit") {
-      setMedicines((oldState) => [
-        ...oldState.map((value) => {
-          if (value.id !== id) return value;
-          return newMedicine;
-        }),
-      ]);
+      setMedicines((oldState) => [...oldState.map((value) => (value.id !== id ? value : newMedicine))]);
+      await fetcher("patch", `/medicines/${id}`, newMedicine);
     } else if (type === "new") {
       setMedicines((oldState) => [...oldState, newMedicine]);
+      await fetcher("post", "/medicines", { ...newMedicine });
     }
     onClose();
   };

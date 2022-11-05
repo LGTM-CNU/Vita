@@ -10,7 +10,6 @@ import {
 
 import { MedicinesService } from './medicines.service';
 import { MedicinesEntity } from './medicines.entity';
-import { MedicinesDTO } from './medicine.dto';
 
 @Controller('medicines')
 export class MedicinesController {

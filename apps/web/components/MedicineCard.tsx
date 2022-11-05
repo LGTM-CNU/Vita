@@ -21,9 +21,9 @@ const MedicineCard: React.FC<MedicineProps> = ({ medicine, index, setMedicines }
       <Wrapper index={index} onClick={() => setIsModalOpen(true)}>
         <Image src={require(`../public/${medicine.thumbnail}`)} width={100} height={100} alt="medicine" />
         <Title>{medicine.type}</Title>
-        {medicine.alarm.morning != null && <Detail>{`아침: ${medicine.alarm.morning}`}</Detail>}
-        {medicine.alarm.evening != null && <Detail>{`점심: ${medicine.alarm.evening}`}</Detail>}
-        {medicine.alarm.afternoon != null && <Detail>{`저녁: ${medicine.alarm.afternoon}`}</Detail>}
+        {medicine.morning != null && <Detail>{`아침: ${medicine.morning}`}</Detail>}
+        {medicine.evening != null && <Detail>{`점심: ${medicine.evening}`}</Detail>}
+        {medicine.afternoon != null && <Detail>{`저녁: ${medicine.afternoon}`}</Detail>}
       </Wrapper>
       <MedicineModal
         id={medicine.id}
