@@ -33,38 +33,27 @@ const MedicineModal: React.FC<MedicineModal> = ({ type, isOpened, medicine, onCl
   };
 
   const onConfirm = () => {
+    const newMedicine = {
+      id: id,
+      type: medicineType,
+      description: description,
+      thumbnail: "medicine1.png",
+      alarm: {
+        morning: morningAlarm,
+        evening: eveningAlarm,
+        afternoon: afternoonAlarm,
+      },
+    } as Medicine;
+
     if (type === "edit") {
       setMedicines((oldState) => [
         ...oldState.map((value) => {
           if (value.id !== id) return value;
-          return {
-            id: id,
-            type: medicineType,
-            description: description,
-            thumbnail: "medicine1.png",
-            alarm: {
-              morning: morningAlarm,
-              evening: eveningAlarm,
-              afternoon: afternoonAlarm,
-            },
-          } as Medicine;
+          return newMedicine;
         }),
       ]);
     } else if (type === "new") {
-      setMedicines((oldState) => [
-        ...oldState,
-        {
-          id: id,
-          type: medicineType,
-          description: description,
-          thumbnail: "medicine1.png",
-          alarm: {
-            morning: morningAlarm,
-            evening: eveningAlarm,
-            afternoon: afternoonAlarm,
-          },
-        } as Medicine,
-      ]);
+      setMedicines((oldState) => [...oldState, newMedicine]);
     }
     onClose();
   };

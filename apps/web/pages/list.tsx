@@ -4,21 +4,25 @@ import MedicineCard from "../components/MedicineCard";
 import NewCard from "../components/NewCard";
 import { useEffect, useState } from "react";
 import { Medicine } from "../type/alarm";
+import fetcher from "../util/fetcher";
 
 export default function List() {
+  const userId = 123;
   const [medicines, setMedicines] = useState<Medicine[]>([]);
   useEffect(() => {
-    fetch("http://localhost:5002/medicines/123").then(async (value) => {
-      const { data } = await value.json();
-      const newMedicineArray = data.map((v: any) => ({
+    const getData = async () => {
+      const response = await fetcher("get", `/medicines/${userId}`);
+      const fetchMedicinesData = response["data"].map((v: any) => ({
         id: v.medicines_id,
         type: v.medicines_type,
         description: v.medicines_description,
         thumbnail: v.medicines_thumbnail,
         alarm: { morning: v.medicines_morning, evening: v.medicines_evening, afternoon: v.medicines_afternoon },
       }));
-      setMedicines([...medicines, ...newMedicineArray]);
-    });
+      setMedicines([...fetchMedicinesData]);
+    };
+
+    getData();
   }, []);
   return (
     <Container>
