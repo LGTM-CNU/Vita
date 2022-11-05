@@ -1,0 +1,14 @@
+server {
+        listen 80 default_server;
+        listen [::]:80 default_server;
+
+
+        location /medicines {
+                proxy_pass http://localhost:5002;    # backend 주소
+        }
+
+
+        location / {
+                proxy_pass http://localhost:5001;   # Front 주소
+        }
+}
