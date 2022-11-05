@@ -1,7 +1,7 @@
 interface Alarm {
-  morning: string;
-  evening: string;
-  afternoon: string;
+  morning?: string;
+  evening?: string;
+  afternoon?: string;
 }
 
 export interface Medicine {

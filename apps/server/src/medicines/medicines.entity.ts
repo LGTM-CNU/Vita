@@ -16,14 +16,14 @@ export class MedicinesEntity {
   @JoinColumn({ name: 'ownerId' })
   ownerId: UsersEntity;
 
-  @Column()
-  morning: string;
+  @Column({ nullable: true })
+  morning: string | undefined | null;
 
-  @Column()
-  evening: string;
+  @Column({ nullable: true })
+  evening: string | undefined | null;
 
-  @Column()
-  afternoon: string;
+  @Column({ nullable: true })
+  afternoon: string | undefined | null;
 
   @Column()
   description: string;

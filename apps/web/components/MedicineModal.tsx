@@ -15,11 +15,11 @@ interface MedicineModal {
 }
 
 const MedicineModal: React.FC<MedicineModal> = ({ type, isOpened, medicine, onClose, setMedicines, id }) => {
-  const [morningAlarm, setMorningAlarm] = useState<String>(medicine?.alarm.morning || "아침");
-  const [eveningAlarm, setEveningAlarm] = useState<String>(medicine?.alarm.evening || "점심");
-  const [afternoonAlarm, setAfternoonAlarm] = useState<String>(medicine?.alarm.afternoon || "저녁");
-  const [medicineType, setMedecineType] = useState<String>(medicine?.type || "");
-  const [description, setDescription] = useState<String | undefined>(medicine?.description);
+  const [morningAlarm, setMorningAlarm] = useState<String | undefined>(medicine?.alarm.morning);
+  const [eveningAlarm, setEveningAlarm] = useState<String | undefined>(medicine?.alarm.evening);
+  const [afternoonAlarm, setAfternoonAlarm] = useState<String | undefined>(medicine?.alarm.afternoon);
+  const [medicineType, setMedecineType] = useState<string>(medicine?.type || "");
+  const [description, setDescription] = useState<string | undefined>(medicine?.description);
 
   const onChangeMorningHandler = (e: React.ChangeEvent<HTMLSelectElement>) => setMorningAlarm(e.target.value);
   const onChangeEveningHandler = (e: React.ChangeEvent<HTMLSelectElement>) => setEveningAlarm(e.target.value);
@@ -27,9 +27,9 @@ const MedicineModal: React.FC<MedicineModal> = ({ type, isOpened, medicine, onCl
 
   const isSelected = (time: "morning" | "evening" | "afternoon", value: string) => {
     if (!medicine) return false;
-    if (time === "morning") return value === medicine?.alarm.morning;
-    else if (time === "evening") return value === medicine?.alarm.evening;
-    else if (time === "afternoon") return value === medicine?.alarm.afternoon;
+    if (time === "morning") return value === morningAlarm;
+    else if (time === "evening") return value === eveningAlarm;
+    else if (time === "afternoon") return value === afternoonAlarm;
   };
 
   const onConfirm = () => {
@@ -79,12 +79,8 @@ const MedicineModal: React.FC<MedicineModal> = ({ type, isOpened, medicine, onCl
         <Main>
           <Image src={medicineImg} width={200} height={200} alt={"medicine"} />
           <Detail>
-            <input placeholder="약 이름" defaultValue={medicine?.type} onInput={onTypeInputHandler} />
-            <textarea
-              placeholder="약에 대한 설명"
-              onChange={onDescriptionChangeHandler}
-              defaultValue={medicine?.description}
-            />
+            <input placeholder="약 이름" value={medicineType} onInput={onTypeInputHandler} />
+            <textarea placeholder="약에 대한 설명" value={description} onInput={onDescriptionChangeHandler} />
           </Detail>
         </Main>
 
