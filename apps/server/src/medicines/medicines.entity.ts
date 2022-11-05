@@ -19,12 +19,12 @@ export class MedicinesEntity {
   @Column({ nullable: true })
   afternoon: string | undefined | null;
 
-  @Column()
-  description: string;
+  @Column({ nullable: true })
+  description: string | null;
 
   @Column({ length: 40 })
   type: string;
 
-  @Column()
+  @Column({ default: 'medicine1.png' })
   thumbnail: string;
 }
