@@ -3,7 +3,7 @@ import styled from "styled-components";
 import Modal from "./Modal";
 import medicineImg from "../public/medicine1.png";
 import { Medicine } from "../type/alarm";
-import React, { useState, SetStateAction, Dispatch, useId } from "react";
+import React, { useState, SetStateAction, Dispatch, useId, useEffect } from "react";
 import fetcher from "../util/fetcher";
 import { useRecoilValue } from "recoil";
 import { userIdState } from "../store/userId";
@@ -17,13 +17,27 @@ interface MedicineModal {
   setMedicines: Dispatch<SetStateAction<Medicine[]>>;
 }
 
+const DAYS = ["월", "화", "수", "목", "금", "토", "일"];
+const MORNING_TIMES = ["아침", "06:00", "07:00", "08:00", "09:00", "10:00", "11:00"];
+const EVENING_TIMES = ["점심", "12:00", "13:00", "14:00", "15:00", "16:00"];
+const AFTERNOON_TIMES = ["저녁", "17:00", "18:00", "19:00", "20:00", "21:00", "23:00"];
+
 const MedicineModal: React.FC<MedicineModal> = ({ type, isOpened, medicine, onClose, setMedicines, id }) => {
-  const [morningAlarm, setMorningAlarm] = useState<String | undefined>(medicine?.morning);
-  const [eveningAlarm, setEveningAlarm] = useState<String | undefined>(medicine?.evening);
-  const [afternoonAlarm, setAfternoonAlarm] = useState<String | undefined>(medicine?.afternoon);
-  const [medicineType, setMedecineType] = useState<string>(medicine?.type || "");
-  const [description, setDescription] = useState<string | undefined>(medicine?.description);
+  const [morningAlarm, setMorningAlarm] = useState<String | undefined>();
+  const [eveningAlarm, setEveningAlarm] = useState<String | undefined>();
+  const [afternoonAlarm, setAfternoonAlarm] = useState<String | undefined>();
+  const [medicineType, setMedecineType] = useState<string | undefined>();
+  const [description, setDescription] = useState<string | undefined>();
+  const [repeat, setRepeat] = useState<boolean[]>(Array(7).fill(false));
   const userId = useRecoilValue(userIdState);
+
+  useEffect(() => {
+    setMorningAlarm(medicine?.morning);
+    setEveningAlarm(medicine?.evening);
+    setAfternoonAlarm(medicine?.afternoon);
+    setMedecineType(medicine?.type);
+    setDescription(medicine?.description);
+  }, [medicine]);
 
   const onChangeMorningHandler = (e: React.ChangeEvent<HTMLSelectElement>) => setMorningAlarm(e.target.value);
   const onChangeEveningHandler = (e: React.ChangeEvent<HTMLSelectElement>) => setEveningAlarm(e.target.value);
@@ -34,6 +48,10 @@ const MedicineModal: React.FC<MedicineModal> = ({ type, isOpened, medicine, onCl
     if (time === "morning") return value === morningAlarm;
     else if (time === "evening") return value === eveningAlarm;
     else if (time === "afternoon") return value === afternoonAlarm;
+  };
+
+  const onDayClickHandler = (e: any) => {
+    setRepeat(repeat.map((day, index) => (index == e.target.value ? !day : day)));
   };
 
   const onConfirm = async () => {
@@ -74,41 +92,26 @@ const MedicineModal: React.FC<MedicineModal> = ({ type, isOpened, medicine, onCl
         </Main>
 
         <Select onChange={onChangeMorningHandler}>
-          <option>아침</option>
-          <option selected={isSelected("morning", "06:00")}>06:00</option>
-          <option selected={isSelected("morning", "07:00")}>07:00</option>
-          <option selected={isSelected("morning", "08:00")}>08:00</option>
-          <option selected={isSelected("morning", "09:00")}>09:00</option>
-          <option selected={isSelected("morning", "10:00")}>10:00</option>
-          <option selected={isSelected("morning", "11:00")}>11:00</option>
+          {MORNING_TIMES.map((time) => (
+            <option selected={isSelected("morning", time)}>{time}</option>
+          ))}
         </Select>
         <Select onChange={onChangeEveningHandler}>
-          <option>점심</option>
-          <option selected={isSelected("evening", "12:00")}>12:00</option>
-          <option selected={isSelected("evening", "13:00")}>13:00</option>
-          <option selected={isSelected("evening", "14:00")}>14:00</option>
-          <option selected={isSelected("evening", "15:00")}>15:00</option>
-          <option selected={isSelected("evening", "16:00")}>16:00</option>
+          {EVENING_TIMES.map((time) => (
+            <option selected={isSelected("evening", time)}>{time}</option>
+          ))}
         </Select>
         <Select onChange={onChangeAfternoonHandler}>
-          <option>저녁</option>
-          <option selected={isSelected("afternoon", "17:00")}>17:00</option>
-          <option selected={isSelected("afternoon", "18:00")}>18:00</option>
-          <option selected={isSelected("afternoon", "19:00")}>19:00</option>
-          <option selected={isSelected("afternoon", "20:00")}>20:00</option>
-          <option selected={isSelected("afternoon", "21:00")}>21:00</option>
-          <option selected={isSelected("afternoon", "22:00")}>22:00</option>
-          <option selected={isSelected("afternoon", "23:00")}>23:00</option>
+          {AFTERNOON_TIMES.map((time) => (
+            <option selected={isSelected("afternoon", time)}>{time}</option>
+          ))}
         </Select>
-
         <Date>
-          <Day>월</Day>
-          <Day>화</Day>
-          <Day>수</Day>
-          <Day>목</Day>
-          <Day>금</Day>
-          <Day>토</Day>
-          <Day>일</Day>
+          {DAYS.map((day, index) => (
+            <Day selected={repeat[index]} value={index} onClick={onDayClickHandler}>
+              {day}
+            </Day>
+          ))}
         </Date>
       </Container>
     </Modal>
@@ -166,7 +169,7 @@ const Date = styled.div`
   gap: 1rem;
 `;
 
-const Day = styled.div`
+const Day = styled.button<{ selected: boolean }>`
   width: 3rem;
   height: 3rem;
   display: flex;
@@ -174,8 +177,9 @@ const Day = styled.div`
   align-items: center;
 
   border-radius: 0.8rem;
+  border: none;
 
-  background: orange;
+  background-color: ${({ selected }) => (selected ? "#ED9752" : "#F3CE5C")};
   color: white;
 `;
 
