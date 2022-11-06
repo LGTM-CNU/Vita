@@ -27,4 +27,7 @@ export class MedicinesEntity {
 
   @Column({ default: 'medicine1.png' })
   thumbnail: string;
+
+  @Column({ default: 0 })
+  repeat: number;
 }

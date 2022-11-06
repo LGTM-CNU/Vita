@@ -2,8 +2,9 @@ import Image from "next/image";
 import styled from "styled-components";
 import Modal from "./Modal";
 import medicineImg from "../public/medicine1.png";
+import { binaryToRepeatArray, repeatArrayToBinary } from "../util/binary";
 import { Medicine } from "../type/alarm";
-import React, { useState, SetStateAction, Dispatch, useId, useEffect } from "react";
+import React, { useState, SetStateAction, Dispatch, useEffect } from "react";
 import fetcher from "../util/fetcher";
 import { useRecoilValue } from "recoil";
 import { userIdState } from "../store/userId";
@@ -37,6 +38,7 @@ const MedicineModal: React.FC<MedicineModal> = ({ type, isOpened, medicine, onCl
     setAfternoonAlarm(medicine?.afternoon);
     setMedecineType(medicine?.type);
     setDescription(medicine?.description);
+    if (medicine) setRepeat(binaryToRepeatArray(medicine.repeat));
   }, [medicine]);
 
   const onChangeMorningHandler = (e: React.ChangeEvent<HTMLSelectElement>) => setMorningAlarm(e.target.value);
@@ -64,6 +66,7 @@ const MedicineModal: React.FC<MedicineModal> = ({ type, isOpened, medicine, onCl
       evening: eveningAlarm === "점심" ? null : eveningAlarm,
       afternoon: afternoonAlarm === "저녁" ? null : afternoonAlarm,
       ownerId: userId,
+      repeat: repeatArrayToBinary(repeat),
     } as Medicine;
 
     if (type === "edit") {
@@ -73,6 +76,7 @@ const MedicineModal: React.FC<MedicineModal> = ({ type, isOpened, medicine, onCl
       setMedicines((oldState) => [...oldState, newMedicine]);
       await fetcher("post", "/medicines", { ...newMedicine });
     }
+    console.log(repeatArrayToBinary(repeat).toString(2));
     onClose();
   };
 

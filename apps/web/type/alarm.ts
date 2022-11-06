@@ -7,4 +7,5 @@ export interface Medicine {
   evening?: string;
   afternoon?: string;
   ownerId: string;
+  repeat: number;
 }

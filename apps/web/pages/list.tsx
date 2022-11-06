@@ -22,6 +22,7 @@ export default function List() {
         morning: v.medicines_morning,
         evening: v.medicines_evening,
         afternoon: v.medicines_afternoon,
+        repeat: v.medicines_repeat,
       }));
       setMedicines([...fetchMedicinesData]);
     };
