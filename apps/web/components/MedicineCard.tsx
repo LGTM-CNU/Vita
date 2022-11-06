@@ -65,6 +65,10 @@ const Title = styled.h1`
 
   margin-top: 2rem;
   margin-bottom: 0.4rem;
+
+  @media only screen and (max-width: 435px) {
+    font-size: 1.4rem;
+  }
 `;
 
 const Detail = styled.div`
