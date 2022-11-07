@@ -4,8 +4,8 @@ import { Dispatch, SetStateAction, useCallback, useState, useId, useEffect } fro
 import uuid from "react-uuid";
 
 import MedicineModal from "./MedicineModal";
-import medicineImg from "../public/medicine1.png";
-import { Medicine } from "../type/alarm";
+import medicineImg from "@/public/medicine1.png";
+import { Medicine } from "@/type/alarm";
 
 interface MedicineProps {
   setMedicines: Dispatch<SetStateAction<Medicine[]>>;

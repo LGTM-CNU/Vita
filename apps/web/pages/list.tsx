@@ -1,12 +1,12 @@
 import styled from "styled-components";
-import Header from "../src/components/Header";
-import MedicineCard from "../src/components/MedicineCard";
-import NewCard from "../src/components/NewCard";
+import Header from "@/components/Header";
+import MedicineCard from "@/components/MedicineCard";
+import NewCard from "@/components/NewCard";
 import { useEffect, useState } from "react";
-import { Medicine } from "../src/type/alarm";
-import fetcher from "../src/util/fetcher";
+import { Medicine } from "@/type/alarm";
+import fetcher from "@/util/fetcher";
 import { useRecoilValue } from "recoil";
-import { userIdState } from "../src/store/userId";
+import { userIdState } from "@/store/userId";
 
 export default function List() {
   const userId = useRecoilValue(userIdState);

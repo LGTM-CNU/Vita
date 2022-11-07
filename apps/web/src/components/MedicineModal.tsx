@@ -1,13 +1,13 @@
 import Image from "next/image";
 import styled from "styled-components";
 import Modal from "./Modal";
-import medicineImg from "../public/medicine1.png";
+import medicineImg from "@/public/medicine1.png";
 import { binaryToRepeatArray, repeatArrayToBinary } from "../util/binary";
-import { Medicine } from "../type/alarm";
+import { Medicine } from "@/type/alarm";
 import React, { useState, SetStateAction, Dispatch, useEffect } from "react";
-import fetcher from "../util/fetcher";
+import fetcher from "@/util/fetcher";
 import { useRecoilValue } from "recoil";
-import { userIdState } from "../store/userId";
+import { userIdState } from "@/store/userId";
 
 interface MedicineModal {
   id: String;

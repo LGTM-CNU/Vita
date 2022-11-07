@@ -1,6 +1,6 @@
 import Image from "next/image";
 import styled from "styled-components";
-import Vita from "../public/logo.png";
+import Vita from "@/public/logo.png";
 
 export default function Header() {
   return (

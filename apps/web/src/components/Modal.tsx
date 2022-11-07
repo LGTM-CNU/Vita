@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
-import { fadeIn, fadeOut } from "../styles/animation";
-import { flexCenter } from "../styles/utils";
+import { fadeIn, fadeOut } from "@/styles/animation";
+import { flexCenter } from "@/styles/utils";
 import { createPortal } from "react-dom";
 
 interface ModalProps {
