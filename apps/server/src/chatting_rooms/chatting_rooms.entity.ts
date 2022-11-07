@@ -9,7 +9,7 @@ import {
 } from 'typeorm';
 
 @Entity('chatting_rooms')
-export class ChattingRoomEntity {
+export class ChattingRoomsEntity {
   @PrimaryColumn({ type: String })
   id: string;
 

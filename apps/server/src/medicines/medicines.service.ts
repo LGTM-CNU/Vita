@@ -15,7 +15,6 @@ export class MedicinesService {
     return await this.medicinesRepository
       .createQueryBuilder('medicines')
       .where('ownerId=:ownerId', { ownerId })
-      .select()
       .execute();
   }
 
