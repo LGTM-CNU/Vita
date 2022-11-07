@@ -6,7 +6,7 @@ export class MedicinesEntity {
   @PrimaryColumn({ type: String })
   id: string;
 
-  @ManyToOne((type) => UsersEntity, (Users) => Users.id)
+  @ManyToOne(() => UsersEntity, (Users) => Users.id)
   @JoinColumn({ name: 'ownerId' })
   ownerId: UsersEntity;
 
