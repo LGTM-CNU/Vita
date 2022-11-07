@@ -2,7 +2,7 @@
 import axios from "axios";
 
 const apiClient = axios.create({
-  baseURL: process.env.NODE_ENV === "development" ? "http://localhost:5002" : "http://localhost",
+  baseURL: process.env.NODE_ENV === "development" ? "http://localhost:5002/api" : "http://localhost/api",
 });
 
 const fetcher = async (method: "get" | "post" | "patch" | "delete", url: string, ...rest: object[]) => {
