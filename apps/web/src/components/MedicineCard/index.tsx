@@ -1,9 +1,9 @@
-import styled from "styled-components";
 import Image from "next/image";
 import { useState, Dispatch, SetStateAction } from "react";
 
-import MedicineModal from "./MedicineModal";
+import MedicineModal from "@/common/MedicineModal";
 import { Medicine } from "@/type/alarm";
+import { Container, Wrapper, Title, Detail } from "./styles";
 
 interface MedicineProps {
   index: number;
@@ -36,48 +36,5 @@ const MedicineCard: React.FC<MedicineProps> = ({ medicine, index, setMedicines }
     </Container>
   );
 };
-
-const Container = styled.div`
-  width: 50%;
-  min-width: 15rem;
-`;
-
-const Wrapper = styled.div<{ index: number }>`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  flex: 1;
-
-  min-height: 28rem;
-
-  background-color: ${({ index }) => (index % 4 === 1 || index % 4 === 2 ? "#fdf4d7" : "#f8d1af")};
-
-  border-radius: 3rem;
-
-  margin: 2rem;
-
-  padding: 2rem;
-`;
-
-const Title = styled.h1`
-  font-size: 2rem;
-
-  margin-top: 2rem;
-  margin-bottom: 0.4rem;
-
-  @media only screen and (max-width: 435px) {
-    font-size: 1.4rem;
-  }
-`;
-
-const Detail = styled.div`
-  margin-block: 0.2rem;
-  font-size: 1.6rem;
-
-  @media only screen and (max-width: 435px) {
-    font-size: 1rem;
-  }
-`;
 
 export default MedicineCard;

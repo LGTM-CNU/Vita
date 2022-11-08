@@ -1,7 +1,7 @@
 import { useState } from "react";
 import styled from "styled-components";
-import Header from "@/components/Header";
-import ToggleSwitch from "@/components/ToggleSwitch";
+import Header from "@/common/Header";
+import ToggleSwitch from "@/common/ToggleSwitch";
 
 export default function Web() {
   const [url, setUrl] = useState("");

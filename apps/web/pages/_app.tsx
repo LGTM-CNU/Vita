@@ -1,7 +1,8 @@
-import "../src/styles/global.css";
 import type { AppProps } from "next/app";
-import AppLayout from "../src/components/AppLayout";
 import { RecoilRoot } from "recoil";
+
+import AppLayout from "@/common/AppLayout";
+import "@/styles/global.css";
 
 export default function MyApp({ Component, pageProps }: AppProps) {
   return (

@@ -1,13 +1,14 @@
-import Image from "next/image";
-import styled from "styled-components";
-import Modal from "./Modal";
-import medicineImg from "@/public/medicine1.png";
-import { binaryToRepeatArray, repeatArrayToBinary } from "../util/binary";
-import { Medicine } from "@/type/alarm";
 import React, { useState, SetStateAction, Dispatch, useEffect } from "react";
-import fetcher from "@/util/fetcher";
 import { useRecoilValue } from "recoil";
+import Image from "next/image";
+
+import Modal from "@/common/Modal";
+import medicineImg from "@/public/medicine1.png";
+import { binaryToRepeatArray, repeatArrayToBinary } from "@/util/binary";
+import { Medicine } from "@/type/alarm";
+import fetcher from "@/util/fetcher";
 import { userIdState } from "@/store/userId";
+import { Container, Main, Detail, Select, Day, Date } from "./styles";
 
 interface MedicineModal {
   id: String;
@@ -121,78 +122,5 @@ const MedicineModal: React.FC<MedicineModal> = ({ type, isOpened, medicine, onCl
     </Modal>
   );
 };
-
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  padding-inline: 3rem;
-  padding-top: 2rem;
-`;
-
-const Main = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 100%;
-
-  margin-right: 2rem;
-`;
-
-const Detail = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  width: 70%;
-
-  margin: 1rem;
-
-  input {
-    font-size: 1.6rem;
-    margin-bottom: 1rem;
-    outline: none;
-  }
-
-  textarea {
-    font-size: 1.6rem;
-    outline: none;
-  }
-`;
-
-const Date = styled.div`
-  display: flex;
-  width: 100%;
-
-  justify-content: space-around;
-  align-items: center;
-
-  margin-top: 2rem;
-  margin-bottom: 2rem;
-
-  gap: 1rem;
-`;
-
-const Day = styled.button<{ selected: boolean }>`
-  width: 3rem;
-  height: 3rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  border-radius: 0.8rem;
-  border: none;
-
-  background-color: ${({ selected }) => (selected ? "#ED9752" : "#F3CE5C")};
-  color: white;
-`;
-
-const Select = styled.select`
-  margin: 0 auto;
-  height: 4rem;
-  margin-bottom: 1rem;
-
-  width: 70%;
-
-  font-size: 1.6rem;
-`;
 
 export default React.memo(MedicineModal);

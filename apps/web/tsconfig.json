@@ -10,7 +10,8 @@
       "@/type/*": ["src/type/*"],
       "@/util/*": ["src/util/*"],
       "@/styles/*": ["src/styles/*"],
-      "@/public/*": ["public/*"]
+      "@/public/*": ["public/*"],
+      "@/common/*": ["src/components/common/*"]
     }
   }
 }

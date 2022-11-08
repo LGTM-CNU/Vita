@@ -1,11 +1,11 @@
-import styled from "styled-components";
+import { Dispatch, SetStateAction, useCallback, useState, useEffect } from "react";
 import Image from "next/image";
-import { Dispatch, SetStateAction, useCallback, useState, useId, useEffect } from "react";
 import uuid from "react-uuid";
 
-import MedicineModal from "./MedicineModal";
+import MedicineModal from "@/components/common/MedicineModal";
 import medicineImg from "@/public/medicine1.png";
 import { Medicine } from "@/type/alarm";
+import { Container, Wrapper } from "./styles";
 
 interface MedicineProps {
   setMedicines: Dispatch<SetStateAction<Medicine[]>>;
@@ -34,34 +34,5 @@ const NewCard: React.FC<MedicineProps> = ({ setMedicines, index }) => {
     </Container>
   );
 };
-
-const Container = styled.div`
-  width: 50%;
-  min-width: 15rem;
-`;
-
-const Wrapper = styled.div<{ index: number }>`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  flex: 1;
-
-  min-height: 28rem;
-
-  background-color: ${({ index }) => (index % 4 === 1 || index % 4 === 2 ? "#fdf4d7" : "#f8d1af")};
-
-  border: 1px dashed black;
-  border-radius: 3rem;
-
-  margin: 2rem;
-
-  padding: 2rem;
-
-  p {
-    font-size: 2rem;
-    margin-top: 3rem;
-  }
-`;
 
 export default NewCard;

@@ -1,6 +1,6 @@
 import Image from "next/image";
-import styled from "styled-components";
 import Vita from "@/public/logo.png";
+import { Container } from "./styles";
 
 export default function Header() {
   return (
@@ -9,10 +9,3 @@ export default function Header() {
     </Container>
   );
 }
-
-const Container = styled.div`
-  display: flex;
-  justify-content: center;
-
-  margin-bottom: 1rem;
-`;
