@@ -13,7 +13,6 @@ export default function MyApp({ Component, pageProps }: AppProps) {
       <RecoilRoot>
         <Component {...pageProps} />
       </RecoilRoot>
-      <Footer />
     </AppLayout>
   );
 }

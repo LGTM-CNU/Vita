@@ -4,8 +4,9 @@ import styled from "styled-components";
 
 import MedicineCard from "@/components/MedicineCard";
 import NewCard from "@/components/NewCard";
-import { Medicine } from "@/type/alarm";
 import fetcher from "@/util/fetcher";
+import Footer from "@/components/common/Footer";
+import { Medicine } from "@/type/alarm";
 import { userIdState } from "@/store/userId";
 
 export default function List() {
@@ -37,6 +38,7 @@ export default function List() {
         ))}
         <NewCard index={medicines.length} setMedicines={setMedicines} />
       </MedicineContainer>
+      <Footer />
     </Container>
   );
 }
