@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { useRecoilValue } from "recoil";
 import styled from "styled-components";
 
-import Header from "@/common/Header";
 import MedicineCard from "@/components/MedicineCard";
 import NewCard from "@/components/NewCard";
 import { Medicine } from "@/type/alarm";
@@ -32,7 +31,6 @@ export default function List() {
   }, []);
   return (
     <Container>
-      <Header />
       <MedicineContainer>
         {medicines.map((medicine, index) => (
           <MedicineCard key={index} index={index} medicine={medicine} setMedicines={setMedicines} />
@@ -45,6 +43,7 @@ export default function List() {
 
 const Container = styled.div`
   width: 100%;
+  height: calc(100% - 25rem);
 `;
 
 const MedicineContainer = styled.div`

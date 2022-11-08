@@ -19,7 +19,7 @@ const MedicineCard: React.FC<MedicineProps> = ({ medicine, index, setMedicines }
   return (
     <Container>
       <Wrapper index={index} onClick={() => setIsModalOpen(true)}>
-        <Image src={require(`../../public/${medicine.thumbnail}`)} width={100} height={100} alt="medicine" />
+        <Image src={require(`../../../public/${medicine.thumbnail}`)} width={100} height={100} alt="medicine" />
         <Title>{medicine.type}</Title>
         {medicine.morning != null && <Detail>{`아침: ${medicine.morning}`}</Detail>}
         {medicine.evening != null && <Detail>{`점심: ${medicine.evening}`}</Detail>}

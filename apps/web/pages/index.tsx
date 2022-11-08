@@ -1,6 +1,5 @@
 import { useState } from "react";
 import styled from "styled-components";
-import Header from "@/common/Header";
 import ToggleSwitch from "@/common/ToggleSwitch";
 
 export default function Web() {
@@ -13,7 +12,6 @@ export default function Web() {
 
   return (
     <Container>
-      <Header />
       <Title>
         {mode}
         <ToggleSwitch mode={mode} setMode={setMode} />
