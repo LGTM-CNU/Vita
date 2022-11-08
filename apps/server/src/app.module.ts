@@ -8,7 +8,6 @@ import { UsersModule } from './users/users.module';
 import { ChatModule } from './chat/chat.module';
 import { ManagersModule } from './managers/managers.module';
 import { ChattingRoomsModule } from './chatting_rooms/chatting_rooms.module';
-import { ChattingLogModule } from './chatting_log/chatting_log.module';
 import { ChattingLogsModule } from './chatting_logs/chatting_logs.module';
 
 @Module({
@@ -29,7 +28,6 @@ import { ChattingLogsModule } from './chatting_logs/chatting_logs.module';
     ChatModule,
     ManagersModule,
     ChattingRoomsModule,
-    ChattingLogModule,
     ChattingLogsModule,
   ],
   controllers: [AppController],
