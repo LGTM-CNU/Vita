@@ -7,7 +7,7 @@ export const Container = styled.div`
   height: 7rem;
   background-color: ${theme.colors.lightGray};
 
-  position: sticky;
+  position: fixed;
   bottom: 0;
 
   display: flex;

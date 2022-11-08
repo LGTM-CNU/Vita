@@ -43,7 +43,7 @@ export default function List() {
 
 const Container = styled.div`
   width: 100%;
-  height: calc(100% - 25rem);
+  padding-bottom: 7rem;
 `;
 
 const MedicineContainer = styled.div`
