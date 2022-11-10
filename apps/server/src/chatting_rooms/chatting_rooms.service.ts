@@ -29,8 +29,7 @@ export class ChattingRoomsService {
   }
 
   async create(data: ChattingRoomsEntity) {
-    const chattingRoom = this.chattingRoomsRepository.create(data);
-    await this.chattingRoomsRepository.save(data);
-    return chattingRoom;
+    this.chattingRoomsRepository.create(data);
+    return await this.chattingRoomsRepository.save(data);
   }
 }
