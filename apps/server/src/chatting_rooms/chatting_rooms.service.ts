@@ -27,4 +27,10 @@ export class ChattingRoomsService {
       .where('userId=:userId', { userId })
       .getOne();
   }
+
+  async create(data: ChattingRoomsEntity) {
+    const chattingRoom = this.chattingRoomsRepository.create(data);
+    await this.chattingRoomsRepository.save(data);
+    return chattingRoom;
+  }
 }
