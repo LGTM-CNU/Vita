@@ -5,13 +5,13 @@ import {
   Entity,
   JoinColumn,
   ManyToOne,
-  PrimaryColumn,
+  PrimaryGeneratedColumn,
 } from 'typeorm';
 
 @Entity('chatting_logs')
 export class ChattingLogsEntity {
-  @PrimaryColumn({ type: String })
-  id: string;
+  @PrimaryGeneratedColumn()
+  id: number;
 
   @ManyToOne(() => ChattingRoomsEntity, (ChattingRoom) => ChattingRoom.id)
   @JoinColumn({ name: 'chattingId' })

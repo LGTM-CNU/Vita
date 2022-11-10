@@ -2,7 +2,7 @@ import { Controller, Get, Post, Body, Param, HttpStatus } from '@nestjs/common';
 import { ChattingRoomsEntity } from './chatting_rooms.entity';
 import { ChattingRoomsService } from './chatting_rooms.service';
 
-@Controller('chatting-rooms')
+@Controller('chattingRooms')
 export class ChattingRoomsController {
   constructor(private ChattingRoomsService: ChattingRoomsService) {}
 
