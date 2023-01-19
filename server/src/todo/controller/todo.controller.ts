@@ -2,7 +2,7 @@ import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { TodoService } from '../service/todo.service';
 import { Todo } from '@prisma/client';
 
-@Controller('api/vi/todos')
+@Controller('api/v1/todos')
 export class TodoController {
   constructor(private readonly todoService: TodoService) {}
 
