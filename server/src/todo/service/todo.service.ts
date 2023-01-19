@@ -9,4 +9,20 @@ export class TodoService {
   async fetchAllTodos(): Promise<Todo[]> {
     return this.prismaService.todo.findMany();
   }
+
+  async fetchTodoItem(id: number): Promise<Todo | null> {
+    return this.prismaService.todo.findUnique({
+      where: {
+        id: Number(id),
+      },
+    });
+  }
+
+  async deleteTodoItem(id: number): Promise<Todo | null> {
+    return this.prismaService.todo.delete({
+      where: {
+        id: Number(id),
+      },
+    });
+  }
 }
