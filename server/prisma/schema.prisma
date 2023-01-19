@@ -21,3 +21,7 @@ model Medicine {
   id Int @default(autoincrement()) @id
   name String
 }
+
+model Todo {
+  id Int @default(autoincrement()) @id
+}
