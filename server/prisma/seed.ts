@@ -5,10 +5,11 @@ const prisma = new PrismaClient();
 async function main() {
   const user = await prisma.user.upsert({
     create: {
-      id: 1,
+      id: '1',
+      password: 'temp',
     },
     where: {
-      id: 1,
+      id: '1',
     },
     update: {},
   });

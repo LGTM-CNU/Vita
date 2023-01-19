@@ -10,8 +10,8 @@ datasource db {
 
 // 데이터 베이스 스키마
 model User {
-  id Int @default(autoincrement()) @id
-  
+  id String @id
+  password String
 }
 
 model Medicine {
