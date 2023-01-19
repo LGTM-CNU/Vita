@@ -26,6 +26,7 @@
     "@nestjs/platform-express": "^9.0.0",
     "@nestjs/swagger": "^6.1.4",
     "@prisma/client": "^4.9.0",
+    "class-validator": "^0.14.0",
     "express-session": "^1.17.3",
     "passport": "^0.6.0",
     "passport-local": "^1.0.0",
