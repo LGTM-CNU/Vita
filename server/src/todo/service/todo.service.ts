@@ -25,4 +25,8 @@ export class TodoService {
       },
     });
   }
+
+  async addTodoItem(data: Todo): Promise<Todo | null> {
+    return this.prismaService.todo.create({ data });
+  }
 }
