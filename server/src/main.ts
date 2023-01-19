@@ -9,7 +9,7 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const config = new DocumentBuilder()
     .setTitle('Vita API')
-    .setDescription('The Vita API description')
+    .setDescription('Vita 서비스에 대한 API 명세서입니다.')
     .setVersion('1.0')
     //.addTag('cats')
     .build();
@@ -19,6 +19,7 @@ async function bootstrap() {
 
   const prismaService = app.get(PrismaService);
   await prismaService.enableShutdownHooks(app);
+
   app.use(
     session({
       secret: 'hyunjin',

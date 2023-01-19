@@ -7,4 +7,5 @@
 ```shell
 nest g controller todo/controller/todo --flat
 nest g service todo/service/todo --flat
+nest g resource posts
 ```
