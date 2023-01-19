@@ -5,7 +5,13 @@ generator client {
   provider = "prisma-client-js"
 }
 
+// 데이터 베이스 연동
 datasource db {
-  provider = "postgresql"
+  provider = "sqlite"
   url      = env("DATABASE_URL")
+}
+
+model User {
+  id Int @default(autoincrement()) @id
+  
 }
