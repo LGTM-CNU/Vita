@@ -8,16 +8,38 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum Role {
+  ADMIN
+  USER
+}
+
 // 데이터 베이스 스키마
 model User {
-  id String @id
+  // id autoincrement
+  id Int @id @default(autoincrement())
   password String
+  name String
+  mode Role @default(USER)
+
+  createdAt DateTime @default(now())
 }
+
+
 
 model Medicine {
   id Int @default(autoincrement()) @id
+  // user_id foreign key
+  user_id Int @map("user_id")
+
   name String
 }
+
+model Alarm {
+
+}
+
+
+
 
 model Todo {
   id Int @default(autoincrement()) @id

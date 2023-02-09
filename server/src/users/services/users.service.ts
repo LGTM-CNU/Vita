@@ -5,4 +5,8 @@ export class UsersService {
   findUserById(id: number) {
     return;
   }
+
+  async findOne(id) {
+    return;
+  }
 }
