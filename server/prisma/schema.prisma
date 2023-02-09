@@ -44,6 +44,17 @@ model Alarm {
 
 }
 
+model Chat {
+  id Int @id @default(autoincrement())
+  // user_id foreign key
+  user_id Int @map("user_id")
+  // medicine_id foreign key
+  medicine_id Int @map("medicine_id")
+
+  content String
+  createdAt DateTime @default(now())
+}
+
 model Todo {
   id Int @default(autoincrement()) @id
 }
