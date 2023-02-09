@@ -4,13 +4,13 @@ import { Injectable } from '@nestjs/common';
 export class UsersService {
   private readonly users = [
     {
-      id: 1,
+      id: '1',
       password: 'temp',
       name: 'hyunjin',
     },
   ];
 
-  findUserById(id: number) {
+  async findUserById(id: string) {
     return this.users.find((user) => user.id === id);
   }
 

@@ -18,8 +18,13 @@ export class UsersController {
     return 'hi';
   }
 
+  // @Get(':id')
+  // getUser(@Param('id', ParseIntPipe) id: string) {
+  //   return this.userService.findUserById(id);
+  // }
+
   @Get(':id')
-  getUser(@Param('id', ParseIntPipe) id: number) {
+  getUser(@Param('id', ParseIntPipe) id: string) {
     return this.userService.findUserById(id);
   }
 
