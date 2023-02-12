@@ -15,7 +15,7 @@ export class UsersController {
 
   @Get()
   getUsers() {
-    return 'hi';
+    return this.userService.getAllUsers();
   }
 
   // @Get(':id')
@@ -28,7 +28,7 @@ export class UsersController {
     return this.userService.findUserById(id);
   }
 
-  @Post('create')
+  @Post()
   createUser(@Body() createUserDto: CreateUserDto) {
     return this.userService.createUser(createUserDto);
   }
