@@ -17,20 +17,27 @@ model User {
   id        String  @id
   password  String
   name      String?
-  mode      Role     @default(USER) 
+
+  mode      Role     @default(USER)
+  medicines Medicine[] 
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
 
 model Medicine {
-  id Int @default(autoincrement()) @id
-  user_id Int @map("user_id")
-  manager String
-  name String
-  type String
-  description String
-  thumbnail String
+  id          Int     @default(autoincrement()) @id
+  userId      String 
+  manager     String
+  name        String
+  type        String
+  description String?
+  thumbnail   String?
+
+  user        User    @relation(fields: [userId], references: [id])
+
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 }
 
 model Alarm {
