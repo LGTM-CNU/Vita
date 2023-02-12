@@ -8,23 +8,23 @@ datasource db {
 }
 
 enum Role {
-  ADMIN
-  USER
+  ADMIN // 'ADMIN'
+  USER // 'USER'
 }
 
 // 데이터 베이스 스키마
 model User {
-  id Int @id @default(autoincrement())
-  password String
-  name String
-  mode Role @default(USER)
+  id        String  @id
+  password  String
+  name      String?
+  mode      Role     @default(USER) 
 
   createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Medicine {
   id Int @default(autoincrement()) @id
-  // user_id foreign key
   user_id Int @map("user_id")
   manager String
   name String
@@ -34,14 +34,14 @@ model Medicine {
 }
 
 model Alarm {
-  id Int @id @default(autoincrement())
+  id          Int      @id @default(autoincrement())
   // user_id foreign key
-  user_id Int @map("user_id")
+  user_id     Int      @map("user_id")
   // medicine_id foreign key
-  medicine_id Int @map("medicine_id")
-  time DateTime
-  created_at DateTime @default(now())
-
+  medicine_id Int      @map("medicine_id")
+  time        DateTime
+  created_at  DateTime @default(now())
+ 
 }
 
 model Chat {
