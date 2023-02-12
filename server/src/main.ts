@@ -11,11 +11,11 @@ async function bootstrap() {
     .setTitle('Vita API')
     .setDescription('Vita 서비스에 대한 API 명세서입니다.')
     .setVersion('1.0')
-    //.addTag('cats')
+    .addTag('Vita')
     .build();
   const document = SwaggerModule.createDocument(app, config);
 
-  SwaggerModule.setup('api', app, document);
+  SwaggerModule.setup('/', app, document);
 
   const prismaService = app.get(PrismaService);
   await prismaService.enableShutdownHooks(app);

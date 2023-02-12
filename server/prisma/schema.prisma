@@ -14,7 +14,6 @@ enum Role {
 
 // 데이터 베이스 스키마
 model User {
-  // id autoincrement
   id Int @id @default(autoincrement())
   password String
   name String
@@ -27,8 +26,11 @@ model Medicine {
   id Int @default(autoincrement()) @id
   // user_id foreign key
   user_id Int @map("user_id")
-
+  manager String
   name String
+  type String
+  description String
+  thumbnail String
 }
 
 model Alarm {
@@ -37,22 +39,18 @@ model Alarm {
   user_id Int @map("user_id")
   // medicine_id foreign key
   medicine_id Int @map("medicine_id")
-
   time DateTime
-  createdAt DateTime @default(now())
-
+  created_at DateTime @default(now())
 
 }
 
 model Chat {
   id Int @id @default(autoincrement())
-  // user_id foreign key
   user_id Int @map("user_id")
-  // medicine_id foreign key
   medicine_id Int @map("medicine_id")
 
   content String
-  createdAt DateTime @default(now())
+  created_at DateTime @default(now())
 }
 
 model Todo {

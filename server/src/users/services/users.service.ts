@@ -14,7 +14,7 @@ export class UsersService {
     return this.users.find((user) => user.id === id);
   }
 
-  async findOne(id) {
-    return;
+  async createUser() {
+    // const createdUser = await this;
   }
 }
