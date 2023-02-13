@@ -12,9 +12,10 @@ import { AuthService } from './auth/services/auth.service';
 import { PrismaService } from './prisma/prisma.service';
 import { UsersController } from './users/controllers/users.controller';
 import { MedicineModule } from './medicine/medicine.module';
+import { ChatModule } from './chat/chat.module';
 
 @Module({
-  imports: [TodoModule, AuthModule, UsersModule, PrismaModule, MedicineModule],
+  imports: [TodoModule, AuthModule, UsersModule, PrismaModule, MedicineModule, ChatModule],
   controllers: [TodoController, AuthController, UsersController],
   providers: [TodoService, PrismaService, AuthService, UsersService],
 })
