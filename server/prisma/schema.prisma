@@ -1,6 +1,7 @@
 generator client {
   provider = "prisma-client-js"
 }
+
 // 데이터 베이스 연동
 datasource db {
   provider = "mysql"
@@ -18,48 +19,68 @@ model User {
   password  String
   name      String?
 
-  mode      Role     @default(USER)
-  medicines Medicine[] 
+  mode      Role       @default(USER)
+  medicines Medicine[]
+  alarms    Alarm[]
+  admin     Relation[] @relation("admin")
+  patient   Relation[] @relation("patient")
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
 
 model Medicine {
-  id          Int     @default(autoincrement()) @id
-  userId      String 
-  manager     String
+  id          Int     @id @default(autoincrement())
   name        String
-  type        String
+  type        String?
   description String?
   thumbnail   String?
 
-  user        User    @relation(fields: [userId], references: [id])
+  user   User    @relation(fields: [userId], references: [id])
+  userId String
+  alarms Alarm[]
 
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Relation {
+  id Int @id @default(autoincrement())
+
+  patient   User   @relation("patient", fields: [patientId], references: [id])
+  patientId String
+
+  adminId String
+  admin   User   @relation("admin", fields: [adminId], references: [id])
 }
 
 model Alarm {
-  id          Int      @id @default(autoincrement())
-  // user_id foreign key
-  user_id     Int      @map("user_id")
-  // medicine_id foreign key
-  medicine_id Int      @map("medicine_id")
-  time        DateTime
-  created_at  DateTime @default(now())
- 
+  id Int @id @default(autoincrement())
+
+  user   User   @relation(fields: [userId], references: [id])
+  userId String
+
+  medicine   Medicine @relation(fields: [medicineId], references: [id])
+  medicineId Int
+
+  time DateTime
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Chat {
-  id Int @id @default(autoincrement())
-  user_id Int @map("user_id")
+  id          Int @id @default(autoincrement())
+  user_id     Int @map("user_id")
   medicine_id Int @map("medicine_id")
 
   content String
-  created_at DateTime @default(now())
+  isVoice Boolean @default(false)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Todo {
-  id Int @default(autoincrement()) @id
+  id Int @id @default(autoincrement())
 }
