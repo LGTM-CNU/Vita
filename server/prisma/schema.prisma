@@ -22,16 +22,9 @@ model User {
   mode      Role       @default(USER)
   medicines Medicine[]
   alarms    Alarm[]
-  // admin     Relation[] @relation("admin")
-  // patient   Relation[] @relation("patient")
-  // relationId Int
-  // relations  Relation[]
-
   adminRelation Relation[] @relation("AdminRelation")
   userRelation  Relation[] @relation("UserRelation")
-
-  // relationsAdmin Relation[] @relation("AdminRelation", fields: [id], references: [adminId])
-  // relationsPatient Relation[] @relation("PatientRelation", fields: [id], references: [patientId])
+  chats    Chat[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -44,9 +37,10 @@ model Medicine {
   description String?
   thumbnail   String?
 
-  user   User    @relation(fields: [userId], references: [id])
-  userId String
-  alarms Alarm[]
+  user      User    @relation(fields: [userId], references: [id])
+  userId    String
+  alarms    Alarm[]
+  chats     Chat[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -60,67 +54,40 @@ model Relation {
   patientId String
   patient   User   @relation("UserRelation", fields: [patientId], references: [id])
 
-  // admin     User    @relation("AdminRelation", fields: [adminId], references: [id])
-  // adminId   String
-  // patient   User    @relation("PatientRelation", fields: [patientId], references: [id])
-  // patientId String
-
-  // admin      User?    @relation( fields: [adminId], references: [id])
-  // adminId    String?
-  // patient    User?    @relation( fields: [patientId], references: [id])
-  // patientId  String?
-  // patientId String
-  // adminId   String
-  // patientId String
-
-  // user      User?    @relation(fields: [userId], references: [id])
-  // userId    String?
-
-  // patient   User?    @relation("patient", fields: [patientId], references: [id])
-  // patientId String?
-  // users     User
-  // patient User @relation("patient", fields: [patientId], references: [id])
-  // admin   User @relation("admin", fields: [adminId], references: [id])
-
-  // patient   User   @relation("patient", fields: [patientId], references: [id])
-  // patientId String
-
-  // adminId String
-  // admin   User   @relation("admin", fields: [adminId], references: [id])
-
-  // User User[]
-  // admin User @relation("admin", fields: [adminId], references: [id])
-  // user User[]
-
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
 
 model Alarm {
-  id      Int @id @default(autoincrement())
+  id         Int      @id @default(autoincrement())
 
-  user   User   @relation(fields: [userId], references: [id])
-  userId String
+  user       User     @relation(fields: [userId], references: [id])
+  userId     String
 
   medicine   Medicine @relation(fields: [medicineId], references: [id])
   medicineId Int
 
-  time DateTime
+  time       DateTime
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
 }
 
 model Chat {
-  id          Int @id @default(autoincrement())
-  user_id     Int @map("user_id")
-  medicine_id Int @map("medicine_id")
+  id         Int @id @default(autoincrement())
 
-  content String
-  isVoice Boolean @default(false)
+  content    String
+  talker     String
+  alarmed    Boolean @default(false)
+  isVoice    Boolean @default(false)
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  user       User   @relation(fields: [userId], references: [id])
+  userId     String
+  medicine   Medicine @relation(fields: [medicineId], references: [id])
+  medicineId Int
+
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
 }
 
 model Todo {
