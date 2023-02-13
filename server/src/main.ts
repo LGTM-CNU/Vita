@@ -5,6 +5,28 @@ import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { AppModule } from './app.module';
 import { PrismaService } from './prisma/prisma.service';
 
+import admin from 'firebase-admin';
+
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const serviceAccount = require('../vita-firebase.json');
+
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount),
+  databaseURL: 'https://vita-b53db-default-rtdb.firebaseio.com',
+});
+
+// import admin from 'firebase-admin';
+// import serviceAccount from '../vita-firebase.json';
+
+// console.log(serviceAccount, 1);
+
+// admin.initializeApp({
+//   credential: admin.credential.cert({
+//     projectId: serviceAccount.project_id,
+//   }),
+//   databaseURL: 'https://vita-b53db-default-rtdb.firebaseio.com',
+// });
+
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const config = new DocumentBuilder()
