@@ -82,15 +82,44 @@ export class MedicineService {
   }
 
   async update(id: number, updateMedicineDto: UpdateMedicineDto) {
-    return;
-    //  await this.prismaService.medicine.update({
-    //   where: {
-    //     id,
-    //   },
-    //   data: {
-    //     ...updateMedicineDto,
-    //   },
-    // });
+    const { name, type, description, thumbnail, userId, time, repeat } =
+      updateMedicineDto;
+
+    const medicine = await this.prismaService.medicine.update({
+      where: {
+        id,
+      },
+      data: {
+        name,
+        type,
+        description,
+        thumbnail,
+        userId,
+        repeat,
+      },
+    });
+
+    await this.prismaService.time.deleteMany({
+      where: {
+        medicineId: id,
+      },
+    });
+
+    const result = await Promise.all(
+      time.map((t) =>
+        this.prismaService.time.create({
+          data: {
+            time: t,
+            medicineId: medicine.id,
+          },
+        }),
+      ),
+    );
+
+    return {
+      ...medicine,
+      time: result.map((r: any) => r.time),
+    };
   }
 
   async remove(id: number) {
