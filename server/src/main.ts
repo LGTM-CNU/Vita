@@ -8,12 +8,12 @@ import { PrismaService } from './prisma/prisma.service';
 import admin from 'firebase-admin';
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
-const serviceAccount = require('../vita-firebase.json');
+// const serviceAccount = require('../vita-firebase.json');
 
-admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount),
-  databaseURL: 'https://vita-b53db-default-rtdb.firebaseio.com',
-});
+// admin.initializeApp({
+//   credential: admin.credential.cert(serviceAccount),
+//   databaseURL: 'https://vita-b53db-default-rtdb.firebaseio.com',
+// });
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
