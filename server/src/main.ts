@@ -15,18 +15,6 @@ admin.initializeApp({
   databaseURL: 'https://vita-b53db-default-rtdb.firebaseio.com',
 });
 
-// import admin from 'firebase-admin';
-// import serviceAccount from '../vita-firebase.json';
-
-// console.log(serviceAccount, 1);
-
-// admin.initializeApp({
-//   credential: admin.credential.cert({
-//     projectId: serviceAccount.project_id,
-//   }),
-//   databaseURL: 'https://vita-b53db-default-rtdb.firebaseio.com',
-// });
-
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const config = new DocumentBuilder()

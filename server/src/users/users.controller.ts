@@ -1,8 +1,9 @@
 import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UsersService } from './users.service';
+import { ApiOperation, ApiParam } from '@nestjs/swagger';
 
-@Controller('api/v1/users')
+@Controller('api/v1/user')
 export class UsersController {
   constructor(private readonly userService: UsersService) {}
 
@@ -12,7 +13,10 @@ export class UsersController {
   }
 
   @Get(':id')
+  @ApiOperation({ summary: '유저 id로 유저 정보 가져오기' })
+  @ApiParam({ name: '유저 id', type: 'string' })
   getUserById(@Param() id: string) {
+    console.log(id, 'contr');
     return this.userService.findUserById(id);
   }
 
