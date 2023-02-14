@@ -16,13 +16,20 @@ export class UsersService {
   ];
 
   async findUserById(id: string) {
-    console.log(id);
-
-    return this.prismaService.user.findUnique({
+    const result = await this.prismaService.user.findUnique({
       where: {
         id,
       },
     });
+
+    if (!result) {
+      throw new HttpException(
+        'id가 존재하지 않습니다. id를 확인해주세요.',
+        HttpStatus.NOT_FOUND,
+      );
+    }
+
+    return result;
   }
 
   async createUser(createUserDto: CreateUserDto): Promise<User | null> {
