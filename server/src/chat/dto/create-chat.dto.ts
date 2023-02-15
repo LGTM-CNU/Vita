@@ -20,4 +20,7 @@ export class CreateChatDto {
 
   @ApiProperty()
   alarmed: boolean;
+
+  @ApiProperty()
+  userId: string;
 }

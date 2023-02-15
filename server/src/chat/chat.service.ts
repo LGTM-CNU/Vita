@@ -1,11 +1,26 @@
 import { Injectable } from '@nestjs/common';
+
 import { CreateChatDto } from './dto/create-chat.dto';
 import { UpdateChatDto } from './dto/update-chat.dto';
+import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
 export class ChatService {
-  create(createChatDto: CreateChatDto) {
-    return 'This action adds a new chat';
+  constructor(private readonly prismaService: PrismaService) {}
+
+  async create(createChatDto: CreateChatDto) {
+    const { userId, destination, talker, alarmed, isVoice, content } =
+      createChatDto;
+    return await this.prismaService.chat.create({
+      data: {
+        userId,
+        destination,
+        talker,
+        alarmed,
+        isVoice,
+        content,
+      },
+    });
   }
 
   findAll() {
