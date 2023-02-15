@@ -3,23 +3,21 @@ import { IsNotEmpty } from 'class-validator';
 
 export class CreateChatDto {
   @ApiProperty()
+  talker: string;
+
+  @ApiProperty()
+  destination: string;
+
+  @ApiProperty()
+  content: string;
+
+  @ApiProperty()
+  isVoice: string;
+
+  @ApiProperty()
   @IsNotEmpty()
   medicineId: string;
 
   @ApiProperty()
-  // @IsNotEmpty()
-  talker: string;
-
-  @ApiProperty()
   alarmed: boolean;
 }
-
-// export class CreateUserDto {
-//   @ApiProperty()
-//   @IsNotEmpty()
-//   id: string;
-
-//   @ApiProperty()
-//   @IsNotEmpty()
-//   password: string;
-// }

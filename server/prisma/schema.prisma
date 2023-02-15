@@ -88,20 +88,21 @@ model Alarm {
 }
 
 model Chat {
-  id         Int      @id @default(autoincrement())
+  id          Int      @id @default(autoincrement())
 
-  content    String 
-  talker     String
-  alarmed    Boolean  @default(false)
-  isVoice    Boolean  @default(false)
+  destination String
+  content     String 
+  talker      String
+  alarmed     Boolean  @default(false)
+  isVoice     Boolean?  @default(false)
 
-  user       User     @relation(fields: [userId], references: [id])
-  userId     String
-  medicine   Medicine @relation(fields: [medicineId], references: [id])
-  medicineId Int
+  user        User     @relation(fields: [userId], references: [id])
+  userId      String
+  medicine    Medicine @relation(fields: [medicineId], references: [id])
+  medicineId  Int
 
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 }
 
 model Todo {
