@@ -27,12 +27,53 @@ export class ChatService {
     return `This action returns all chat`;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} chat`;
+  async findOne(id: string) {
+    try {
+      const user = await this.prismaService.user.findUnique({
+        where: {
+          id,
+        },
+      });
+
+      if (!user) {
+        return null;
+      }
+
+      const chatList = await this.prismaService.chat.findMany({
+        where: {
+          userId: user.id,
+        },
+      });
+
+      return chatList;
+
+      // const result = await this.prismaService.chat.findUnique({
+      //   where: {
+      //     id: Number(id),
+      //   },
+      // });
+      // if (!result) {
+      //   return null;
+      // }
+      // return result;
+    } catch (error) {}
   }
 
-  update(id: number, updateChatDto: UpdateChatDto) {
-    return `This action updates a #${id} chat`;
+  // update(id: number, updateChatDto: UpdateChatDto) {
+  //   return `This action updates a #${id} chat`;
+  // }
+
+  async update(id: number) {
+    const chat = await this.prismaService.chat.update({
+      where: {
+        id,
+      },
+      data: {
+        alarmed: true,
+      },
+    });
+
+    return chat;
   }
 
   remove(id: number) {
