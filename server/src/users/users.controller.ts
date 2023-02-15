@@ -22,4 +22,9 @@ export class UsersController {
   createUser(@Body() createUserDto: CreateUserDto) {
     return this.userService.createUser(createUserDto);
   }
+
+  @Get(':id/medicines')
+  getUserMedicines(@Param('id') id: string) {
+    return this.userService.findUserMedicines(id);
+  }
 }

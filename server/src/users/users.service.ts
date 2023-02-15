@@ -62,4 +62,18 @@ export class UsersService {
   async getAllUsers() {
     return this.prismaService.user.findMany();
   }
+
+  async findUserMedicines(id: string) {
+    const medicines = this.prismaService.medicine.findMany({
+      where: {
+        userId: id,
+      },
+    });
+
+    if (!medicines) {
+      throw new HttpException('약을 찾을 수 없습니다.', HttpStatus.NOT_FOUND);
+    }
+
+    return medicines;
+  }
 }
