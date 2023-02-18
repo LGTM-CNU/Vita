@@ -97,16 +97,6 @@ export class UsersService {
       .sort((a, b) => {
         return a.createdAt.getDate() - b.createdAt.getDate();
       });
-    // const medicines = userMedicines
-    //   .concat(adminMedicines)
-    //   .filter((medicine) => {
-    //     if (idSet.has(medicine.id)) {
-    //       return false;
-    //     } else {
-    //       idSet.add(medicine.id);
-    //       return true;
-    //     }
-    //   });
 
     if (!medicines) {
       throw new HttpException('약을 찾을 수 없습니다.', HttpStatus.NOT_FOUND);
