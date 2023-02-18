@@ -1,9 +1,16 @@
+import { PrismaService } from 'src/prisma/prisma.service';
 import { Injectable } from '@nestjs/common';
 import { CreatePushMessageDto } from './dto/create-push-message.dto';
 import { UpdatePushMessageDto } from './dto/update-push-message.dto';
 
 @Injectable()
 export class PushMessageService {
+  constructor(private readonly prismaService: PrismaService) {}
+
+  storeFCM() {
+    return this.prismaService;
+  }
+
   create(createPushMessageDto: CreatePushMessageDto) {
     return 'This action adds a new pushMessage';
   }

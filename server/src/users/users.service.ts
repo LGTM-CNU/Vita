@@ -1,19 +1,13 @@
-import { CreateUserDto } from './dto/create-user.dto';
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { Role, User } from '@prisma/client';
+
+import { CreateRelationDto } from './dto/create-relation.dto';
+import { CreateUserDto } from './dto/create-user.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
 export class UsersService {
   constructor(private prismaService: PrismaService) {}
-
-  private readonly users = [
-    {
-      id: '1',
-      password: 'temp',
-      name: 'hyunjin',
-    },
-  ];
 
   async findUserById(id: string) {
     const result = await this.prismaService.user.findUnique({
@@ -75,5 +69,38 @@ export class UsersService {
     }
 
     return medicines;
+  }
+
+  async createRelation(createRelationDto: CreateRelationDto) {
+    // return this.prismaService.user.update({
+    //   where: {
+    //     id,
+    //   },
+    //   data: {
+    // });
+    const { userId, adminId } = createRelationDto;
+
+    try {
+      const relation = await this.prismaService.relation.create({
+        data: {
+          adminId,
+          userId,
+        },
+      });
+
+      if (!relation) {
+        throw new HttpException(
+          '관계를 생성할 수 없습니다.',
+          HttpStatus.NOT_FOUND,
+        );
+      }
+
+      return relation;
+    } catch (error) {
+      throw new HttpException(
+        'Failed to retrieve user',
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
   }
 }

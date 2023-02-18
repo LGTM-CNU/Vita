@@ -1,4 +1,12 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { PushMessageService } from './push-message.service';
 import { CreatePushMessageDto } from './dto/create-push-message.dto';
 import { UpdatePushMessageDto } from './dto/update-push-message.dto';
@@ -6,6 +14,11 @@ import { UpdatePushMessageDto } from './dto/update-push-message.dto';
 @Controller('push-message')
 export class PushMessageController {
   constructor(private readonly pushMessageService: PushMessageService) {}
+
+  @Get('/fcm/:id')
+  fcm() {
+    return this.pushMessageService.update();
+  }
 
   @Post()
   create(@Body() createPushMessageDto: CreatePushMessageDto) {
@@ -23,7 +36,10 @@ export class PushMessageController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updatePushMessageDto: UpdatePushMessageDto) {
+  update(
+    @Param('id') id: string,
+    @Body() updatePushMessageDto: UpdatePushMessageDto,
+  ) {
     return this.pushMessageService.update(+id, updatePushMessageDto);
   }
 

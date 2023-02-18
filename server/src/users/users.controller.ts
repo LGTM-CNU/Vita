@@ -1,3 +1,4 @@
+import { CreateRelationDto } from './dto/create-relation.dto';
 import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UsersService } from './users.service';
@@ -26,5 +27,10 @@ export class UsersController {
   @Get(':id/medicines')
   getUserMedicines(@Param('id') id: string) {
     return this.userService.findUserMedicines(id);
+  }
+
+  @Post('/relation')
+  createRelation(@Body() createRelationDto: CreateRelationDto) {
+    return this.userService.createRelation(createRelationDto);
   }
 }
