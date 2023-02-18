@@ -93,6 +93,9 @@ export class UsersService {
         } else {
           return false;
         }
+      })
+      .sort((a, b) => {
+        return a.createdAt.getDate() - b.createdAt.getDate();
       });
     // const medicines = userMedicines
     //   .concat(adminMedicines)
@@ -143,5 +146,9 @@ export class UsersService {
         HttpStatus.INTERNAL_SERVER_ERROR,
       );
     }
+  }
+
+  async getAllRelations() {
+    return await this.prismaService.relation.findMany();
   }
 }

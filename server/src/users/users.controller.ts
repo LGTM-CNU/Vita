@@ -33,4 +33,9 @@ export class UsersController {
   createRelation(@Body() createRelationDto: CreateRelationDto) {
     return this.userService.createRelation(createRelationDto);
   }
+
+  @Get('/relation')
+  getAllRelations() {
+    return this.userService.getAllRelations();
+  }
 }

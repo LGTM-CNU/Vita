@@ -1,7 +1,6 @@
 import { Injectable } from '@nestjs/common';
 
 import { CreateChatDto } from './dto/create-chat.dto';
-import { UpdateChatDto } from './dto/update-chat.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
@@ -36,11 +35,6 @@ export class ChatService {
       });
 
       const adminId = relation?.adminId;
-      // const user = await this.prismaService.user.findUnique({
-      //   where: {
-      //     id,
-      //   },
-      // });
 
       const userChat = await this.prismaService.chat.findMany({
         where: {
@@ -60,52 +54,21 @@ export class ChatService {
       userChat.forEach((chat) => chatIdSet.add(chat.id));
       adminChat.forEach((chat) => chatIdSet.add(chat.id));
 
-      const chatList = userChat.concat(adminChat).filter((chat) => {
-        if (chatIdSet.has(chat.id) && !usedChatIdSet.has(chat.id)) {
-          usedChatIdSet.add(chat.id);
-          return true;
-        } else {
-          return false;
-        }
-      });
+      const chatList = userChat
+        .concat(adminChat)
+        .filter((chat) => {
+          if (chatIdSet.has(chat.id) && !usedChatIdSet.has(chat.id)) {
+            usedChatIdSet.add(chat.id);
+            return true;
+          } else {
+            return false;
+          }
+        })
+        .sort((a, b) => {
+          return a.createdAt.getDate() - b.createdAt.getDate();
+        });
 
       return chatList;
-
-      // const adminId = relation?.adminId;
-
-      // const userMedicines = await this.prismaService.medicine.findMany({
-      //   where: {
-      //     userId,
-      //   },
-      // });
-
-      // const adminMedicines = await this.prismaService.medicine.findMany({
-      //   where: {
-      //     userId: adminId,
-      //   },
-      // });
-
-      // const idSet = new Set();
-
-      // userMedicines.forEach((medicine) => idSet.add(medicine.id));
-      // adminMedicines.forEach((medicine) => idSet.add(medicine.id));
-
-      // const medicines = userMedicines
-      //   .concat(adminMedicines)
-      //   .filter((medicine) => {
-      //     if (idSet.has(medicine.id)) {
-      //       return false;
-      //     } else {
-      //       idSet.add(medicine.id);
-      //       return true;
-      //     }
-      //   });
-
-      // if (!medicines) {
-      //   throw new HttpException('약을 찾을 수 없습니다.', HttpStatus.NOT_FOUND);
-      // }
-
-      // return medicines;
     } catch (error) {}
   }
 
