@@ -57,12 +57,53 @@ export class UsersService {
     return this.prismaService.user.findMany();
   }
 
-  async findUserMedicines(id: string) {
-    const medicines = this.prismaService.medicine.findMany({
+  async findUserMedicines(userId: string) {
+    const relation = await this.prismaService.relation.findUnique({
       where: {
-        userId: id,
+        userId,
       },
     });
+
+    const adminId = relation?.adminId;
+
+    const userMedicines = await this.prismaService.medicine.findMany({
+      where: {
+        userId,
+      },
+    });
+
+    const adminMedicines = await this.prismaService.medicine.findMany({
+      where: {
+        userId: adminId,
+      },
+    });
+
+    const idSet = new Set();
+    const userdIdSet = new Set();
+
+    userMedicines.forEach((medicine) => idSet.add(medicine.id));
+    adminMedicines.forEach((medicine) => idSet.add(medicine.id));
+
+    const medicines = userMedicines
+      .concat(adminMedicines)
+      .filter((medicine) => {
+        if (!userdIdSet.has(medicine.id) && idSet.has(medicine.id)) {
+          userdIdSet.add(medicine.id);
+          return true;
+        } else {
+          return false;
+        }
+      });
+    // const medicines = userMedicines
+    //   .concat(adminMedicines)
+    //   .filter((medicine) => {
+    //     if (idSet.has(medicine.id)) {
+    //       return false;
+    //     } else {
+    //       idSet.add(medicine.id);
+    //       return true;
+    //     }
+    //   });
 
     if (!medicines) {
       throw new HttpException('약을 찾을 수 없습니다.', HttpStatus.NOT_FOUND);
