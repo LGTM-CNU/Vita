@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
+import admin from 'firebase-admin';
 
 import { UpdateFCMDto } from './dto/create-push-message.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
-// import { UpdatePushMessageDto } from './dto/update-push-message.dto';
 
 @Injectable()
 export class PushMessageService {
@@ -17,6 +17,40 @@ export class PushMessageService {
         fcmToken: updateFCMDto.fcmToken,
       },
     });
+  }
+
+  async sendMessage(userId: string) {
+    const relation = await this.prismaService.relation.findUnique({
+      where: {
+        userId,
+      },
+    });
+
+    const adminId = relation.adminId;
+
+    const ad = await this.prismaService.user.findUnique({
+      where: {
+        id: adminId,
+      },
+    });
+
+    const fcmToken = ad.fcmToken;
+
+    const message = {
+      notification: {
+        title: 'Vita Test',
+        body: '환자가 약을 먹지 않았습니다.',
+      },
+      token: fcmToken,
+    };
+
+    try {
+      await admin.messaging().send(message);
+    } catch (error) {
+      console.log(error);
+    }
+
+    // console.log(adminId);
   }
 
   // create(createPushMessageDto: CreatePushMessageDto) {

@@ -64,10 +64,10 @@ model Time {
 model Relation { 
   id        Int      @id @default(autoincrement())
 
-  adminId   String?
+  adminId   String?   @unique
   admin     User?     @relation("AdminRelation", fields: [adminId], references: [id])
-  userId String?
-  user   User?     @relation("UserRelation", fields: [userId], references: [id])
+  userId    String?   @unique
+  user      User?     @relation("UserRelation", fields: [userId], references: [id])
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -77,7 +77,7 @@ model Alarm {
   id         Int      @id @default(autoincrement())
 
   user       User     @relation(fields: [userId], references: [id])
-  userId     String
+  userId     String   
 
   medicine   Medicine @relation(fields: [medicineId], references: [id])
   medicineId Int

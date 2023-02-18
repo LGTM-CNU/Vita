@@ -20,6 +20,11 @@ export class PushMessageController {
     return this.pushMessageService.storeFCM(updateFCMDto);
   }
 
+  @Get(':userId')
+  sendMessageToManager(@Param('userId') userId: string) {
+    return this.pushMessageService.sendMessage(userId);
+  }
+
   // @Post()
   // create(@Body() createPushMessageDto: CreatePushMessageDto) {
   //   return this.pushMessageService.create(createPushMessageDto);
