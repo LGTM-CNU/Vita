@@ -138,7 +138,20 @@ export class UsersService {
     }
   }
 
-  async getAllRelations() {
-    return await this.prismaService.relation.findMany();
+  async getRelation(adminId: string) {
+    const result = await this.prismaService.relation.findUnique({
+      where: {
+        adminId,
+      },
+    });
+
+    if (!result) {
+      throw new HttpException(
+        'id가 존재하지 않습니다. id를 확인해주세요.',
+        HttpStatus.NOT_FOUND,
+      );
+    }
+
+    return result;
   }
 }

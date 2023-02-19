@@ -34,8 +34,8 @@ export class UsersController {
     return this.userService.createRelation(createRelationDto);
   }
 
-  @Get('/relation')
-  getAllRelations() {
-    return this.userService.getAllRelations();
+  @Get('/relation/:adminId')
+  getAllRelations(@Param(':adminId') adminId: string) {
+    return this.userService.getRelation(adminId);
   }
 }
