@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, HttpException } from '@nestjs/common';
 import admin from 'firebase-admin';
 
 import { UpdateFCMDto } from './dto/create-push-message.dto';
@@ -37,6 +37,10 @@ export class PushMessageService {
     });
 
     const adminId = relation.adminId;
+
+    if (!adminId) {
+      return new HttpException('관리자가 없습니다.', 404);
+    }
 
     const ad = await this.prismaService.user.findUnique({
       where: {
