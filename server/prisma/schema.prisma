@@ -64,9 +64,9 @@ model Time {
 model Relation { 
   id        Int      @id @default(autoincrement())
 
-  adminId   String?   @unique
+  adminId   String   @unique
   admin     User?     @relation("AdminRelation", fields: [adminId], references: [id])
-  userId    String?   @unique
+  userId    String   @unique
   user      User?     @relation("UserRelation", fields: [userId], references: [id])
 
   createdAt DateTime @default(now())

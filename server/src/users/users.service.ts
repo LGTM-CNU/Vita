@@ -139,7 +139,7 @@ export class UsersService {
   }
 
   async getRelation(adminId: string) {
-    const result = await this.prismaService.relation.findUnique({
+    const result = await this.prismaService.relation.findFirst({
       where: {
         adminId,
       },
