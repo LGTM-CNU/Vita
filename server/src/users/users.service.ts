@@ -95,7 +95,7 @@ export class UsersService {
         }
       })
       .sort((a, b) => {
-        return a.createdAt.getDate() - b.createdAt.getDate();
+        return a.createdAt.getTime() - b.createdAt.getTime();
       });
 
     if (!medicines) {

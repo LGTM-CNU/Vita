@@ -65,7 +65,7 @@ export class ChatService {
           }
         })
         .sort((a, b) => {
-          return a.createdAt.getDate() - b.createdAt.getDate();
+          return a.createdAt.getTime() - b.createdAt.getTime();
         });
 
       return chatList;
