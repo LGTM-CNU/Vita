@@ -9,15 +9,11 @@ export class PushMessageService {
   constructor(private readonly prismaService: PrismaService) {}
 
   async storeFCM(updateFCMDto: UpdateFCMDto) {
-    const result = await this.prismaService.user.findUnique({
+    await this.prismaService.user.findUnique({
       where: {
         id: updateFCMDto.userId,
       },
     });
-
-    if (result.fcmToken) {
-      return;
-    }
 
     return await this.prismaService.user.update({
       where: {
