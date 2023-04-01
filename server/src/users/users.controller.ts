@@ -26,6 +26,7 @@ export class UsersController {
 
   @Get(':id/medicines')
   getUserMedicines(@Param('id') id: string) {
+    console.log(id);
     return this.userService.findUserMedicines(id);
   }
 

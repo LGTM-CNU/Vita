@@ -102,7 +102,26 @@ export class UsersService {
       throw new HttpException('약을 찾을 수 없습니다.', HttpStatus.NOT_FOUND);
     }
 
-    return medicines;
+    const result = await Promise.all(
+      medicines.map((medicine) => {
+        return this.prismaService.time.findMany({
+          where: {
+            medicineId: medicine.id,
+          },
+        });
+      }),
+    );
+
+    if (!result) {
+      throw new HttpException('약을 찾을 수 없습니다.', HttpStatus.NOT_FOUND);
+    }
+
+    return result.map((r, index) => {
+      return {
+        ...medicines[index],
+        time: r.map((r: any) => r.time),
+      };
+    });
   }
 
   async createRelation(createRelationDto: CreateRelationDto) {
