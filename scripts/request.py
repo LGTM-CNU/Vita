@@ -2,7 +2,6 @@ import requests
 import os
 from playsound import playsound
 
-URL = '13.124.248.18'
 # 'https://google.com'
 # 'http://3.36.94.214:4000/'
 USER_NUMBER = 1
