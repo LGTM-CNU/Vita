@@ -1,12 +1,12 @@
 from shared.constant import URL
 from shared.request import get_medicines, post_chatting
+from shared.play import play_text
 import requests
 import json
 import os
 from threading import Thread
 from sensor import start_sensor
 import datetime 
-import time
 import sys
 
 
@@ -23,6 +23,10 @@ def main():
   #      if t == time_str:
           
   #       RUN_SENSOR = True
+
+  play_text(24000, 1)
+  print("play !!")
+
   if RUN_SENSOR:
      # 초음파 센서를 시작한다.
     t = Thread(target=start_sensor)
