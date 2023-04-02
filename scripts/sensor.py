@@ -1,5 +1,5 @@
 import RPi.GPIO as GPIO
-import time
+from time import sleep
 from shared.request import post_chatting
 from shared.constant import USER_ID
 import sys
@@ -43,15 +43,15 @@ def start_sensor():
 
             if distance > 20:
                 # 거리가 멀어진다면 먹었다는 chat api request를 보내야 한다.
-                post_chatting({
-                    "userId": USER_ID,
-                    "talker": "string",
-                    "destination": "string",
-                    "content": "string",
-                    "isVoice": "string",
-                    "medicineId": "string",
-                    "alarmed": True,
-                })
+                # post_chatting({
+                #     "userId": USER_ID,
+                #     "talker": "string",
+                #     "destination": "string",
+                #     "content": "string",
+                #     "isVoice": "string",
+                #     "medicineId": "string",
+                #     "alarmed": True,
+                # })
 
                 # 관리자에게 안먹었다고 푸쉬 메시지(API 호출)
 
@@ -66,13 +66,13 @@ def start_sensor():
 
 
 
-                sys.exit(0) # 이 스레드 뿐만아니라 전체 프로그램 종료
+                # sys.exit(0) # 이 스레드 뿐만아니라 전체 프로그램 종료
 
 
                 # 약을 복용했으면 (그거를 들었을꺼아니야)
                 # 그거를 들어버린 시간을 코드에서 인지하고 있자.
                 # 들어버린 시간을 코드에서 인지하고 있으면 
-            time.sleep(1)
+            sleep(1)
 
     except KeyboardInterrupt:
         pass
