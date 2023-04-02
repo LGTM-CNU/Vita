@@ -1,5 +1,5 @@
 import RPi.GPIO as GPIO
-from time import sleep
+import time
 from shared.request import post_chatting
 from shared.constant import USER_ID
 import sys
@@ -72,7 +72,7 @@ def start_sensor():
                 # 약을 복용했으면 (그거를 들었을꺼아니야)
                 # 그거를 들어버린 시간을 코드에서 인지하고 있자.
                 # 들어버린 시간을 코드에서 인지하고 있으면 
-            sleep(1)
+            time.sleep(1)
 
     except KeyboardInterrupt:
         pass
