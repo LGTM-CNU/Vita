@@ -41,7 +41,7 @@ def start_sensor():
             distance = round((TimeElapsed * 34300) / 2, 2)
             print("Distance = ", distance, "cm")
 
-            if distance > 20:
+            # if distance > 20:
                 # 거리가 멀어진다면 먹었다는 chat api request를 보내야 한다.
                 # post_chatting({
                 #     "userId": USER_ID,
