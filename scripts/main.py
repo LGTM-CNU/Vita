@@ -4,7 +4,7 @@ from shared.play import play_text
 import requests
 import json
 import os
-from threading import Thread
+from multiprocessing import Process
 from sensor import start_sensor
 import datetime 
 from time import sleep
@@ -39,7 +39,7 @@ def main():
   # 약 정보를 가져온다.
   # medicines = get_medicines("1") 
 
-  medicines = [{'time' : ["11:00", "20:34", "20:35", "20:36", "20:37", "20:38", "20:39", "20:40"]}, {'time': ["12:00"]}]
+  medicines = [{'time' : ["11:00", "20:34", "20:35", "20:36", "20:37", "20:38", "12:48", "12:50"]}, {'time': ["12:00","20:47","20:48"]}]
 
   print(current_time_str)
   for medicine in medicines:
@@ -48,10 +48,10 @@ def main():
     # print(medicine[time])
     # midicine.time의 배열 루프에서 현재 시각이랑 같은 시각이 있다면
     # 약을 먹으라고 play
-    if medicine.time:
-      
-      for t in medicine.time:
-       if t == current_time_str:
+    if medicine['time']:
+      for t in medicine['time']:
+        print(t, current_time_str)
+        if t == current_time_str:
           RUN_SENSOR = True
           break
     
@@ -67,10 +67,11 @@ def main():
   # print("play !!")
   play_text(24000, 1)
   print("play !!")
+  print("play !!", RUN_SENSOR)
 
   if RUN_SENSOR:
      # 초음파 센서를 시작한다.
-    t = Thread(target=start_sensor)
+    t = Process(target=start_sensor)
     t.start()
 
     sleep(600) # 10분 대기
@@ -82,7 +83,9 @@ def main():
     t = Thread(target=start_sensor)
     t.start()
 
-    sleep(600)
+    print(123)
+    sleep(6000)
+    print(456)
 
     # 또 안먹었으면 물어본다. 
     # speech to text -> API로 DB에 기록
