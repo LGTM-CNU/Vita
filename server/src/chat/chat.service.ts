@@ -22,8 +22,15 @@ export class ChatService {
     });
   }
 
-  findAll() {
-    return `This action returns all chat`;
+  async findAll() {
+    try {
+      const chatList = await this.prismaService.chat.findMany();
+      return chatList;
+    } catch (error) {
+      console.log(error);
+    }
+
+    return 'error';
   }
 
   async findOne(userId: string) {

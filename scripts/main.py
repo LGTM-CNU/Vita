@@ -1,55 +1,44 @@
-from shared.constant import URL, USER_ID
-from shared.request import get_medicines, post_chatting
-from shared.play import  play_alarm, play_text
+from shared.constant import USER_ID, EAT
+from shared.request import get_medicines
+from shared.play import  play_alarm
 from shared.time import get_current_time_str
 
-import requests
-import json
-import os
-from multiprocessing import Process
-# from sensor import start_sensor
-import datetime 
+import threading
+from sensor import start_sensor
 from time import sleep
-import sys
 
-from pygame import mixer
-
-# def play_text(freq, volume):
-#     playing = False
-
-#     if (playing):
-#         old_pos = mixer.music.get_pos()
-#         mixer.quit()
-
-#     mixer.init(frequency=freq)
-#     mixer.music.load('test.wav')
-#     mixer.music.set_volume(volume)
-#     mixer.music.play()
-#     while mixer.music.get_busy():
-#         sleep(1)
-#     mixer.quit()
+lock = threading.Lock()
 
 def main():
-  # p = Process(target=start_sensor)
-  # p.start()
-
+  thread = threading.Thread(target=start_sensor)
+  thread.start()
+  
   while True:
     medicines = get_medicines(USER_ID)
     current_time_str = get_current_time_str()
-    # sleep(10)
-    sleep(5)
-
-    print(medicines)
+    # print(medicines)
     for medicine in medicines:
       if medicine['time']:
         for t in medicine['time']:
-          print(t, "?@#")
           if t == current_time_str:
-            print("!!")
+            # 약을 먹을 시간이라면 울리는 알림
+            play_alarm(24000, 1)
+            # 10분대기
+            while EAT == False:
+              # 안먹었으면 대기
+              sleep(10)
+              # 10분후에 다시 음악 틈
+              play_alarm(24000, 1)
             break
+    # 항상 안먹은 상태로 초기화      
+    with lock:
+      EAT = False
+    sleep(5)
     
-    # play_alarm()
-    play_alarm(24000, 1)
+if __name__ == '__main__':
+    main()
+
+  
       
 
   # medicines = [{'time' : ["11:00", "20:34", "20:35", "20:36", "20:37", "20:38", "12:48", "12:50"]}, {'time': ["12:00","20:47","20:48"]}]
@@ -112,8 +101,6 @@ def main():
 
 
 
-if __name__ == '__main__':
-    main()
 
 
 
