@@ -1,13 +1,13 @@
 from shared.constant import URL, USER_ID
 from shared.request import get_medicines, post_chatting
-from shared.play import play_text
+from shared.play import  play_alarm, play_text
 from shared.time import get_current_time_str
 
 import requests
 import json
 import os
 from multiprocessing import Process
-from sensor import start_sensor
+# from sensor import start_sensor
 import datetime 
 from time import sleep
 import sys
@@ -29,26 +29,28 @@ from pygame import mixer
 #         sleep(1)
 #     mixer.quit()
 
-#     if (playing):
-#         mixer.init()
-#         mixer.music.load(filepath)
-#         mixer.music.play(-1, (old_pos / 1000))
-
 def main():
-  p = Process(target=start_sensor)
-  p.start()
+  # p = Process(target=start_sensor)
+  # p.start()
 
   while True:
-    sleep(1000)
     medicines = get_medicines(USER_ID)
+    current_time_str = get_current_time_str()
+    # sleep(10)
+    sleep(5)
 
     print(medicines)
-
-
-  # RUN_SENSOR = False
-  current_time_str = get_current_time_str()
-  # 약 정보를 가져온다.
-  # medicines = get_medicines("1") 
+    for medicine in medicines:
+      if medicine['time']:
+        for t in medicine['time']:
+          print(t, "?@#")
+          if t == current_time_str:
+            print("!!")
+            break
+    
+    # play_alarm()
+    play_alarm(24000, 1)
+      
 
   # medicines = [{'time' : ["11:00", "20:34", "20:35", "20:36", "20:37", "20:38", "12:48", "12:50"]}, {'time': ["12:00","20:47","20:48"]}]
 
