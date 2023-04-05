@@ -24,12 +24,14 @@ def main():
             # 약을 먹을 시간이라면 울리는 알림
             play_alarm(24000, 1)
             # 10분대기
-            while EAT == False:
+            while True:
               # 안먹었으면 대기
-              sleep(10)
-              # 10분후에 다시 음악 틈
-              play_alarm(24000, 1)
-            break
+              sleep(6)
+              # sleep(600)
+              if EAT:
+                break
+              else:
+                play_alarm(24000, 1)       
     # 항상 안먹은 상태로 초기화      
     with lock:
       EAT = False
