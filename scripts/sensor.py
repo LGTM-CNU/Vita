@@ -51,7 +51,7 @@ def start_sensor():
                 time.sleep(6)
                 # time.sleep(600)
                 with lock:
-                    eat = False
+                    EAT = False
             else:
                 time.sleep(1)
 
