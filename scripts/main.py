@@ -1,7 +1,8 @@
-from shared.constant import URL
+from shared.constant import URL, USER_ID
 from shared.request import get_medicines, post_chatting
 from shared.play import play_text
 from shared.time import get_current_time_str
+
 import requests
 import json
 import os
@@ -39,8 +40,9 @@ def main():
 
   while True:
     sleep(1000)
-    
+    medicines = get_medicines(USER_ID)
 
+    print(medicines)
 
 
   # RUN_SENSOR = False
