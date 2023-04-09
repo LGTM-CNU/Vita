@@ -3,6 +3,7 @@ import time
 import threading
 from shared.request import post_chatting
 from shared.constant import USER_ID, EAT
+import json
 
 lock = threading.Lock()
 
@@ -33,27 +34,31 @@ def start_sensor():
             time_elapsed = stop_time - start_time
             distance = round((time_elapsed * 34300) / 2, 2)
             print("Distance = ", distance, "cm")
-
+            print(EAT, distance)
             if distance > 50:
-                post_chatting({
-                    "userId": USER_ID,
-                    "talker": "Vita",
-                    "destination": "string",
-                    "content": "string",
-                    "isVoice": "string",
-                    "medicineId": "string",
-                    "alarmed": True,
-                })
-                with lock:
-                    eat = True
+                EAT = True
+                # post는 한번만되도록
+                # post_chatting(json.dumps(
+                #     {
+                #       "talker": "string",
+                #       "destination": "string",
+                #       "content": "string123",
+                #       "isVoice": "string",
+                #       "medicineId": "string",
+                #       "alarmed": True,
+                #       "userId": "1"
+                #     }
+                # ))
+                
+            time.sleep(1)
 
-            if eat:
-                time.sleep(6)
-                # time.sleep(600)
-                with lock:
-                    EAT = False
-            else:
-                time.sleep(1)
+            # if EAT:
+            #     time.sleep(6)
+            #     # time.sleep(600)
+            #     with lock:
+            #         EAT = False
+            # else:
+            #     time.sleep(1)
 
     except KeyboardInterrupt:
         pass

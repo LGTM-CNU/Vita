@@ -13,5 +13,6 @@ def get_medicines(user_id = '1'):
         print(f'Request failed with status code {response.status_code}')
 
 def post_chatting(data):
-    response = requests.post(URL + "/chat", data)
+    headers = {'Content-type': 'application/json', 'Accept': 'text/plain'}
+    response = requests.post(URL + "/chat", data=data, headers=headers)
     print(response.text)

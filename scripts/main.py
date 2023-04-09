@@ -2,36 +2,72 @@ from shared.constant import USER_ID, EAT
 from shared.request import get_medicines
 from shared.play import  play_alarm
 from shared.time import get_current_time_str
+from shared.speechToText import listen
+from shared.request import post_chatting
 
 import threading
+import json
 from sensor import start_sensor
 from time import sleep
 
 lock = threading.Lock()
 
 def main():
+  global EAT
   thread = threading.Thread(target=start_sensor)
   thread.start()
   
   while True:
     medicines = get_medicines(USER_ID)
     current_time_str = get_current_time_str()
+   
+
+
     # print(medicines)
     for medicine in medicines:
       if medicine['time']:
         for t in medicine['time']:
           if t == current_time_str:
-            # 약을 먹을 시간이라면 울리는 알림
-            play_alarm(24000, 1)
-            # 10분대기
-            while True:
-              # 안먹었으면 대기
-              sleep(6)
+            play_alarm(24000,1)
+            
+            # sleep(600)
+            sleep(6)
+
+            if EAT:
+              print('먹음')
+            else:
+              print('안먹어서 두번째 경우')
+              play_alarm(24000, 1)
               # sleep(600)
-              if EAT:
-                break
-              else:
-                play_alarm(24000, 1)       
+              # sleep(6)
+              if_not_eat_reason_str = listen()
+
+              post_chatting(json.dumps(
+                {
+                  "talker": "string",
+                  "destination": "string",
+                  "content": if_not_eat_reason_str,
+                  "isVoice": "string",
+                  "medicineId": "string",
+                  "alarmed": True,
+                  "userId": "1"
+                }
+              ))
+
+    EAT = False
+        # for t in medicine['time']:
+        #   if t == current_time_str:
+        #     # 약을 먹을 시간이라면 울리는 알림
+        #     play_alarm(24000, 1)
+        #     # 10분대기
+        #     while True:
+        #       # 안먹었으면 대기
+        #       sleep(6)
+        #       # sleep(600)
+        #       if EAT:
+        #         break
+        #       else:
+        #         play_alarm(24000, 1)       
     # 항상 안먹은 상태로 초기화      
     with lock:
       EAT = False
