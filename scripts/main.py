@@ -4,6 +4,8 @@ from shared.play import  play_alarm
 from shared.time import get_current_time_str
 from shared.speechToText import listen
 from shared.request import post_chatting
+from shared.chat import start_chat
+from shared.firebase import init_firebase
 
 import threading
 import json
@@ -14,25 +16,24 @@ lock = threading.Lock()
 
 def main():
   global EAT
-  thread = threading.Thread(target=start_sensor)
-  thread.start()
-  
+  init_firebase()
+
+  sensor_thread = threading.Thread(target=start_sensor)
+  sensor_thread.start()
+  chat_thread = threading.Thread(target=start_chat)
+  chat_thread.start()
+
   while True:
     medicines = get_medicines(USER_ID)
     current_time_str = get_current_time_str()
-   
-
-
     # print(medicines)
     for medicine in medicines:
       if medicine['time']:
         for t in medicine['time']:
           if t == current_time_str:
             play_alarm(24000,1)
-            
             # sleep(600)
             sleep(6)
-
             if EAT:
               print('먹음')
             else:
@@ -41,7 +42,6 @@ def main():
               # sleep(600)
               # sleep(6)
               if_not_eat_reason_str = listen()
-
               post_chatting(json.dumps(
                 {
                   "talker": "string",
@@ -53,8 +53,8 @@ def main():
                   "userId": "1"
                 }
               ))
-
-    EAT = False
+    with lock:
+      EAT = False
         # for t in medicine['time']:
         #   if t == current_time_str:
         #     # 약을 먹을 시간이라면 울리는 알림
