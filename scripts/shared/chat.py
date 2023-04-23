@@ -11,16 +11,19 @@ def start_chat():
     chatting = get_chatting(USER_ID)
     # print(chatting)
     for chat in chatting:
-      if not chat['isVoice'] or chat['alarmed']: 
+      if chat['alarmed']: 
         continue
 
-      if ('firebasestorage' in chat['isVoice']):
+      if not chat['isVoice']:
+        print("#234242")
+        print(chat['content'])
+        say(chat['content'])
+        
+      elif ('firebasestorage' in chat['isVoice']):
         print('download 실행!')
         download_firebase(chat['isVoice'])
         play_tts('temp.wav')
-        patch_chatting(chat['id'])
+      
+      patch_chatting(chat['id'])
         
-      else:
-        say(chat['content'])
-
     sleep(60)
