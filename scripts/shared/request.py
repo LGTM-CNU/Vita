@@ -6,7 +6,7 @@ def get_medicines(user_id = '1'):
 
     if response.status_code == 200:
         data = response.json()
-        print(data)
+        # print(data)
 
         return data
     else:
@@ -31,4 +31,9 @@ def get_chatting(user_id):
 
 def patch_chatting(chat_id):
     requests.patch(URL + "/chat/" + str(chat_id))
+    return
+
+def push_message(user_id):
+    requests.get(URL + "/push-message/"+ str(user_id))
+
     return
