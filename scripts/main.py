@@ -46,18 +46,7 @@ def start_sensor():
             if distance > 10:
                 with lock:
                     EAT = True
-            # if distance < 5:
-            #     with lock:
-            #         EAT = False
             time.sleep(1)
-
-            # if EAT:
-            #     time.sleep(6)
-            #     # time.sleep(600)
-            #     with lock:
-            #         EAT = False
-            # else:
-            #     time.sleep(1)
 
     except KeyboardInterrupt:
         pass
@@ -87,8 +76,17 @@ def main():
             if EAT:
               print('먹음')
 
-              # post_chatting({
-              # })
+              post_chatting(json.dumps(
+                {
+                  "talker": "string",
+                  "destination": USER_ID,
+                  "content": current_time_str + "에 약을 먹었습니다." ,
+                  "isVoice": "",
+                  "medicineId": medicine['id'],
+                  "alarmed": True,
+                  "userId": USER_ID
+                }
+              ))
             else:
               print('안먹어서 두번째 경우')
               push_message(USER_ID)
@@ -97,18 +95,19 @@ def main():
               if_not_eat_reason_str = listen()
               post_chatting(json.dumps(
                 {
-                  "talker": "string",
-                  "destination": "string",
+                  "talker": USER_ID,
+                  "destination": "vita",
                   "content": if_not_eat_reason_str,
-                  "isVoice": "string",
-                  "medicineId": "string",
+                  "isVoice": "",
+                  "medicineId": medicine['id'],
                   "alarmed": True,
-                  "userId": "1"
+                  "userId": USER_ID
                 }
               ))
     with lock:
       EAT = False
     sleep(5)
+
     
 if __name__ == '__main__':
     main()

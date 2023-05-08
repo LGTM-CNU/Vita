@@ -34,6 +34,6 @@ def patch_chatting(chat_id):
     return
 
 def push_message(user_id):
-    requests.get(URL + "/push-message/"+ str(user_id))
+    response = requests.get("http://13.124.248.18:4000" + "/push-message/"+ str(user_id))
 
     return
