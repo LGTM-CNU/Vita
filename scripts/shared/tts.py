@@ -8,4 +8,4 @@ def gtts_say(text, volume):
     gtts = gTTS(text=text, lang='ko')
     gtts.save('temp.mp3')
     
-    play_tts('temp.mp3', 24000, volume)
+    play_tts('temp.mp3', 22050, volume)

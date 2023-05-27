@@ -35,21 +35,12 @@ def start_sensor():
             distance = round((time_elapsed * 34300) / 2, 2)
             print("Distance = ", distance, "cm")
             print(EAT, distance)
-            if distance > 50:
-                EAT = True
-                # post는 한번만되도록
-                # post_chatting(json.dumps(
-                #     {
-                #       "talker": "string",
-                #       "destination": "string",
-                #       "content": "string123",
-                #       "isVoice": "string",
-                #       "medicineId": "string",
-                #       "alarmed": True,
-                #       "userId": "1"
-                #     }
-                # ))
-                
+            if distance > 10:
+                with lock:
+                    EAT = True
+            # if distance < 5:
+            #     with lock:
+            #         EAT = False
             time.sleep(1)
 
             # if EAT:
