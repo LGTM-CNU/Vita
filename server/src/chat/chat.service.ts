@@ -49,11 +49,14 @@ export class ChatService {
         },
       });
 
-      const adminChat = await this.prismaService.chat.findMany({
-        where: {
-          userId: adminId,
-        },
-      });
+      const adminChat =
+        adminId == null
+          ? []
+          : await this.prismaService.chat.findMany({
+              where: {
+                userId: adminId,
+              },
+            });
 
       const chatIdSet = new Set();
       const usedChatIdSet = new Set();

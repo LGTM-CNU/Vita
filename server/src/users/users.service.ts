@@ -72,11 +72,16 @@ export class UsersService {
       },
     });
 
-    const adminMedicines = await this.prismaService.medicine.findMany({
-      where: {
-        userId: adminId,
-      },
-    });
+    const adminMedicines =
+      adminId == null
+        ? []
+        : await this.prismaService.medicine.findMany({
+            where: {
+              userId: adminId,
+            },
+          });
+
+    console.log(userId, adminId, userMedicines, adminMedicines);
 
     const idSet = new Set();
     const userdIdSet = new Set();
