@@ -78,7 +78,7 @@ def main():
 
               post_chatting(json.dumps(
                 {
-                  "talker": "string",
+                  "talker": "vita",
                   "destination": USER_ID,
                   "content": current_time_str + "에 약을 먹었습니다." ,
                   "isVoice": "",

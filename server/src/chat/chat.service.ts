@@ -35,6 +35,40 @@ export class ChatService {
 
   async findOne(userId: string) {
     try {
+      const user = await this.prismaService.user.findUnique({
+        where: {
+          id: userId,
+        },
+      });
+
+      const isAdmin = user.mode === 'ADMIN';
+
+      if (isAdmin) {
+        const relation = await this.prismaService.relation.findUnique({
+          where: {
+            adminId: userId,
+          },
+        });
+
+        const patientId = relation?.userId;
+
+        const patientChat = await this.prismaService.chat.findMany({
+          where: {
+            userId: patientId,
+          },
+        });
+
+        const adminChat = await this.prismaService.chat.findMany({
+          where: {
+            userId,
+          },
+        });
+
+        return patientChat.concat(adminChat).sort((a, b) => {
+          return a.createdAt.getTime() - b.createdAt.getTime();
+        });
+      }
+
       const relation = await this.prismaService.relation.findUnique({
         where: {
           userId,
@@ -42,6 +76,7 @@ export class ChatService {
       });
 
       const adminId = relation?.adminId;
+      // const patientId = relation.
 
       const userChat = await this.prismaService.chat.findMany({
         where: {
