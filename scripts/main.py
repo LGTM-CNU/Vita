@@ -1,6 +1,6 @@
 from shared.constant import USER_ID, EAT
 from shared.request import get_medicines
-from shared.play import  play_alarm, first_alarm, second_alarm
+from shared.play import  play_alarm, first_alarm, second_alarm, first_tts, second_tts
 from shared.time import get_current_time_str
 from shared.speechToText import listen
 from shared.request import post_chatting, push_message
@@ -90,9 +90,11 @@ def main():
             else:
               print('안먹어서 두번째 경우')
               push_message(USER_ID)
-              second_alarm(24000, 1)
+              first_tts(24000, 1)
  
               if_not_eat_reason_str = listen()
+              
+              second_tts(24000, 1)
               post_chatting(json.dumps(
                 {
                   "talker": USER_ID,

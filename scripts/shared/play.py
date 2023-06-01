@@ -76,3 +76,23 @@ def second_alarm(freq=22050, volume=1):
     while mixer.music.get_busy():
         time.sleep(1)
     mixer.quit()
+
+
+def first_tts(freq=22050, volume=1):
+    mixer.init(frequency=freq)
+    mixer.music.load('first_tts.mp3')
+    mixer.music.set_volume(volume)
+    mixer.music.play()
+    while mixer.music.get_busy():
+        time.sleep(1)
+    mixer.quit()
+
+
+def second_tts(freq=22050, volume=1):
+    mixer.init(frequency=freq)
+    mixer.music.load('second_tts.mp3')
+    mixer.music.set_volume(volume)
+    mixer.music.play()
+    while mixer.music.get_busy():
+        time.sleep(1)
+    mixer.quit()
