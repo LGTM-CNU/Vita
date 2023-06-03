@@ -112,6 +112,8 @@ def main():
  
               if_not_eat_reason_str = listen()
               
+
+              
               second_tts(24000, 1)
               post_chatting(json.dumps(
                 {

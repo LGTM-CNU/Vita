@@ -25,8 +25,12 @@ def listen():
     logging.info('Initializing for language %s...', args.language)
     hints = get_hints('ko_KR')
     client = CloudSpeechClient()
+    i = 0
     with Board() as board:
         while True:
+            i += 1
+            if i > 2:
+                return '응답이 정상적으로 기록되지 않았습니다.'
             if hints:
                 logging.info('Say something, e.g. %s.' % ', '.join(hints))
             else:
