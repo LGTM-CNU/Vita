@@ -33,7 +33,6 @@ export class MedicineService {
         }),
       ),
     );
-    // console.log(result); // time 확인
 
     return {
       ...medicine,

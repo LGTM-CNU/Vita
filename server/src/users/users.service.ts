@@ -72,6 +72,57 @@ export class UsersService {
       },
     });
 
+    const user = await this.prismaService.user.findUnique({
+      where: {
+        id: userId,
+      },
+    });
+
+    const isAdmin = user.mode === 'ADMIN';
+
+    if (isAdmin) {
+      const relation = await this.prismaService.relation.findUnique({
+        where: {
+          adminId: userId,
+        },
+      });
+
+      const patientId = relation?.userId;
+      const patientMedicine = await this.prismaService.medicine.findMany({
+        where: {
+          userId: patientId,
+        },
+      });
+      const adminMedicine = await this.prismaService.medicine.findMany({
+        where: {
+          userId,
+        },
+      });
+
+      const medicines = [...patientMedicine, ...adminMedicine];
+
+      const result = await Promise.all(
+        medicines.map((medicine) => {
+          return this.prismaService.time.findMany({
+            where: {
+              medicineId: medicine.id,
+            },
+          });
+        }),
+      );
+
+      if (!result) {
+        throw new HttpException('약을 찾을 수 없습니다.', HttpStatus.NOT_FOUND);
+      }
+
+      return result.map((r, index) => {
+        return {
+          ...medicines[index],
+          time: r.map((r: any) => r.time),
+        };
+      });
+    }
+
     const adminMedicines =
       adminId == null
         ? []
@@ -80,8 +131,6 @@ export class UsersService {
               userId: adminId,
             },
           });
-
-    console.log(userId, adminId, userMedicines, adminMedicines);
 
     const idSet = new Set();
     const userdIdSet = new Set();
