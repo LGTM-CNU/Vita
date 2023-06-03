@@ -71,8 +71,9 @@ def main():
           h2,m2 = map(int, current_time_str.split(':'))
           if h1 == h2 and m1 ==m2:
             first_alarm(24000, 1)
-            sleep(60)
+            sleep(300)
             print(EAT)
+
             if EAT:
               print('먹음')
 
@@ -87,8 +88,25 @@ def main():
                   "userId": USER_ID
                 }
               ))
+
+              break
+
+            second_alarm(24000, 1)
+            sleep(300)
+
+            if EAT:
+              post_chatting(json.dumps(
+                {
+                  "talker": "vita",
+                  "destination": USER_ID,
+                  "content": current_time_str + "에 약을 먹었습니다." ,
+                  "isVoice": "",
+                  "medicineId": medicine['id'],
+                  "alarmed": True,
+                  "userId": USER_ID
+                }
+              ))
             else:
-              print('안먹어서 두번째 경우')
               push_message(USER_ID)
               first_tts(24000, 1)
  
