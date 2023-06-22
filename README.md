@@ -18,3 +18,13 @@ Vita는 인공 지능 스피커를 활용해서 사용자의 복약을 지원해
 1. 약을 먹는 시간을 설정하여 알림을 통해 복약을 지원
 2. 사회적 관계(관리자 ↔ 사용자) 기반 복약 지원
 3. 초음파 센서를 통한 적시 개입(사람이 가까워지면 약을 복용하라고 알림)을 통한 복약 지원
+
+## Sequence Diagram
+
+**약을 먹은 경우**
+
+<img width="965" alt="image" src="https://github.com/hyunjinee/linkgraph/assets/63354527/6ed9531f-2f2b-46bf-873a-cd5fadc21271">
+
+**약을 먹지 않은 경우**
+
+<img width="967" alt="image" src="https://github.com/hyunjinee/linkgraph/assets/63354527/63891896-8c44-4d4c-9736-abb4ea51df27">

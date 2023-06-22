@@ -12,7 +12,6 @@ def start_sensor():
     GPIO.setmode(GPIO.BCM)
     GPIO_TRIGGER = 23
     GPIO_ECHO = 24
-    print("start sensor")
 
     GPIO.setup(GPIO_TRIGGER, GPIO.OUT)
     GPIO.setup(GPIO_ECHO, GPIO.IN)
@@ -33,23 +32,11 @@ def start_sensor():
             
             time_elapsed = stop_time - start_time
             distance = round((time_elapsed * 34300) / 2, 2)
-            print("Distance = ", distance, "cm")
-            print(EAT, distance)
+            
             if distance > 10:
                 with lock:
                     EAT = True
-            # if distance < 5:
-            #     with lock:
-            #         EAT = False
             time.sleep(1)
-
-            # if EAT:
-            #     time.sleep(6)
-            #     # time.sleep(600)
-            #     with lock:
-            #         EAT = False
-            # else:
-            #     time.sleep(1)
 
     except KeyboardInterrupt:
         pass
